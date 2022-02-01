@@ -1,0 +1,380 @@
+
+p{
+    font-family : 'Nunito';
+}
+$red:#d63031;
+$white:rgba(255,255,255,.9);
+.container-header-box  {
+
+    width           : 100%;
+    height          : 125px;
+    min-height      : 125px;
+    position        : fixed;
+    z-index         : 2;
+
+    .box-onscroll-header{
+        width           :100%;
+        height          :80%;
+        position        :relative;
+        top             :0px;
+        transition      : 1s;
+        background-color:$white;
+        display         : flex;
+        justify-content : space-between;
+        .box-icon{
+            width           :500px;
+            height          :100%;
+            position        :relative;
+            left            :50px;
+            display         :flex;
+            justify-content :flex-start;
+            align-items     :center;
+            p{
+                font-size   :3em;
+                
+                margin      :0px;
+                margin-left :10px;
+                color       :$red;
+                transition  : 1s;
+            }
+          
+            a{
+                text-decoration: none;
+                height:90%;
+                width:110px;
+                img{
+                    height  :100%;
+                    width   :110px; 
+                }
+            }
+        }
+        .box-login{
+            width           :20%;
+            height          :100%;
+            display         :flex;
+            justify-content :space-evenly;
+            align-items     :center;
+            flex-direction  :row;
+            p{
+                margin      :0px;
+                a {
+                    color   :$red;
+                }
+                .icon-header{
+                    font-size   :30px;
+                    color       :$red;
+                }
+                span{
+                    font-size   :1.3em;
+                    margin      : 0px;
+                    position    : relative;
+                    top         :5px;
+                    left        :5px;
+                }
+                &:hover{
+                    cursor      : pointer;
+                }
+            }
+            .box-icon-menu {
+                .dropdown {
+                    .dropdown-toggle {
+                        background-color: transparent !important;
+                        border-color:transparent !important;
+                        &:after{
+                            display: none !important;;
+                        }
+                        
+                    }
+                    .btn-secondary {
+                        &:focus {
+                            box-shadow :rgb(100 100 100 / 0%)
+                        }
+                    }
+                    .border-bar {
+                        &:focus {
+                            box-shadow : none !important;
+                        }
+                    }
+                }
+                .icon-header{
+                    font-size       :30px;
+                    color           :$red;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                .dropdown-menu-toggle-allcategory{
+                    /* top:-10px !important; */
+                    background-color            : $white;
+                    width                       :100vw !important;
+                    height                      :100vh;
+                    max-height                  :100vh !important;
+                    padding-left                :5px !important;
+                    padding-right               :5px !important;
+                    overflow-x                  :scroll;
+                    transition                  : 0.3s;
+                    border                      : none !important;
+                    border-radius               :0px !important;
+                    overflow                    : hidden;
+                    -webkit-animation           : fadein 0.5s; /* Safari, Chrome and Opera > 11.1 */
+                   -moz-animation               : fadein 0.5s; /* Firefox < 16 */
+                    -ms-animation               : fadein 0.5s; /* Internet Explorer */
+                     -o-animation               : fadein 0.5s; /* Opera < 11.1 */
+                        animation               : fadein 0.5s;
+                        box-shadow              : 0px 15px 10px -15px #111 !important;
+                        position                : absolute !important;
+                        top                     :28px !important;
+                    .nav-pills{
+                        .row {
+                            padding:5px !important;
+                            // border-top:1px solid #dedede;
+                            // border-bottom:1px solid #dedede;
+                            .nav-item {
+                                width:auto !important;
+                                min-width:auto !important;
+                                &:hover{
+                                    cursor: pointer;
+                                }
+                                .nav-link{
+                                    color: #dedede, im !important;
+                                }
+                            }
+                        }
+                        .nav-link.active {
+                            background-color: #27aae1 !important;
+                        }
+                    }
+                    .tab-content{
+
+                        .box-content-hover{
+                            width           : 100%;
+                            height          :500px;
+                            display         : flex;
+                            justify-content : center;
+                            align-items     : center;
+                            flex-direction  : row;
+                            .content-hover-left{
+                                width               :70%;
+                                height              :100%;
+                                display             : flex;
+                                flex-direction      : row;
+                                justify-content     : center;
+                                align-items         : center;
+                                .hover-left-card{
+                                    width           :30%;
+                                    height          :100%;
+                                    padding         :10px;
+                                    ul{
+                                        width           :100%;
+                                        height          : 100%;
+                                        display         : flex;
+                                        flex-direction  : column;
+                                        justify-content : flex-start;
+                                        list-style-type : none;
+                                        margin          :0px !important;
+                                        padding         :0px !important;
+                                        .title-left-card{
+                                            font-size   :1.5em;
+                                            font-weight :700;
+                                            
+                                            &:hover{
+                                                color:black;
+                                            }
+                                        }
+                                        li{
+                                            width           :100%;
+                                            height          :40px;
+                                            font-size       :1em;
+                                            font-weight     :400;
+                                            display         : flex;
+                                            align-items     : center;
+                                            transition      :0.5s;
+                                            text-decoration :none;
+                                            a {
+                                                text-decoration: none;
+                                                color:black;
+                                            }
+                                            &:hover a{
+                                                cursor  : pointer;
+                                                color   :$red
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .content-hover-right{
+                                width               :30%;
+                                height              :100%;
+                                display             : flex;
+                                // justify-content     : center;
+                                align-items         : center;
+                                flex-direction      : column;
+                                padding             :10px;
+                                p:nth-child(1){
+                                    font-size       :1.5em;
+                                    text-align      : center;
+                                    font-weight     :700;
+                                }
+                                p:nth-child(3){
+                                    font-size       :1em;
+                                    text-align      : left;
+                                    font-weight     :550;
+                                    padding-left    :20px;
+                                    padding-right   :15px;
+                                    
+                                }
+                                img{
+                                    width           :90%;
+                                    height          :200px;
+                                }
+                            }
+                        }
+                    }
+                }     
+            }
+            .show>.btn-secondary.dropdown-toggle:focus {
+                box-shadow:0 0 0 0rem rgb(100 100 100 / 0%)  !important;
+            }
+        }
+    }
+
+
+    // BATAS SCROLL HEADER
+    .box-scroll-header{
+        width           :100%;
+        height          :100%;
+        background-color:transparent;
+        display         :flex;
+        justify-content :space-between;
+        align-items     :center;
+        transition      :1s ;
+        .box-icon{
+            width       :120px;
+            height      :100%;
+            position    :relative;
+            left        :50px;
+            display     : flex;
+            justify-content               : center;
+            align-items                   : center;
+            border-bottom-right-radius    :10px;
+            border-bottom-left-radius     :10px;
+            a{
+                text-decoration: none;
+                height:90%;
+                width:90%;;
+                img{
+                    height  :90%;
+                    width   :90%; 
+                }
+            }
+          
+        }
+        .box-login{
+            width           :20%;
+            height          :100%;
+            display         :flex;
+            justify-content :space-evenly;
+            align-items     :center;
+            flex-direction  :row;
+            p{
+                margin      :0px;
+                color       :$white;
+                a {
+                    color   :white;
+                }
+                .icon-header{
+                    font-size   :30px;
+                    color       :$white;
+                }
+                span{
+                    font-size   :1.3em;
+                    margin      : 0px;
+                    position    : relative;
+                    top         :5px;
+                    left        :5px;
+                }
+                &:hover{
+                    cursor      : pointer;
+                }
+            }
+            .box-icon-menu {
+                .dropdown {
+                    .dropdown-toggle {
+                        background-color     : transparent !important;
+                        border-color         :transparent !important;
+                        &:after{
+                            display             : none !important;;
+                        } 
+                    }
+                    .btn-secondary:focus {
+                            box-shadow      :rgb(100 100 100 / 0%) !important;
+                    }
+                    .border-bar {
+                        &:focus {
+                            box-shadow : none !important;
+                        }
+                    }
+                    
+                }
+             
+                .icon-header{
+                    font-size       :30px;
+                    color           :$white;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                .dropdown-menu-toggle-allcategory{
+                    /* top:-10px !important; */
+                    background-color        : $white;
+                    width                   :100vw !important;
+                    height                  :100vh;
+                    max-height              :100vh !important;
+                    padding-left            :5px !important;
+                    padding-right           :5px !important;
+                    overflow-x              :scroll;
+                    transition              : 0.3s;
+                    border                  : none !important;
+                    border-radius           :0px !important;
+                    overflow                : hidden;
+                    -webkit-animation       : fadein 0.5s; /* Safari, Chrome and Opera > 11.1 */
+                   -moz-animation           : fadein 0.5s; /* Firefox < 16 */
+                    -ms-animation           : fadein 0.5s; /* Internet Explorer */
+                     -o-animation           : fadein 0.5s; /* Opera < 11.1 */
+                        animation           : fadein 0.5s;
+                        box-shadow          : 0px 15px 10px -15px #111 !important;
+                        position            : absolute !important;
+                        top:                28px !important;
+                        .nav-pills{
+                            .row {
+                                padding     :5px !important; 
+                                .nav-item {
+                                    width       :auto !important;
+                                    min-width   :auto !important;
+                                    &:hover{
+                                        cursor  : pointer;
+                                    }
+                                    .nav-link{
+                                        color   : #dedede, im !important;
+                                    }
+                                }
+                            }
+                            .nav-link.active {
+                                background-color    : #27aae1 !important;
+                            }
+                          
+            
+                        }
+                }
+                
+            }
+        }
+        .show>.btn-secondary.dropdown-toggle:focus {
+            box-shadow          :0 0 0 0rem rgb(100 100 100 / 0%)  !important;
+        }
+    }
+    
+  
+    
+    
+}

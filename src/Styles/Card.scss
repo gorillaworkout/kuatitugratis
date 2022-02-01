@@ -1,0 +1,149 @@
+
+p{
+    font-family : 'Nunito';
+    margin:0px !important;
+}
+$red:#d63031;
+$white:rgba(255,255,255,.9);
+$bg : #F3F7FF;
+$bg-out:#D2E6E4;
+.card-amazing{
+    width               :25%;
+    min-width           :25%;
+    height              :100%;
+    // border:1px solid black;
+    background-color    : white;
+    border-radius       :10px;
+    display             : flex;
+    justify-content     : center;
+    padding             :10px;
+    margin              :5px;
+    transition          :0.5s;
+    &:hover{
+        cursor          : pointer;
+        box-shadow      : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .box-img{
+        width           : 100%;
+        height          : 60%;
+        border-radius   :10px;
+        .loadable {
+            border-radius:10px;
+        }
+        .price-tag{
+            width           :100%;
+            height          :20%;
+            // border:1px solid black;
+            display         : flex;
+            flex-direction  : row;
+            align-items     : center;
+            
+            p{
+                font-size   :1em !important;
+                color       :$red;
+            }
+        }
+    }
+    p:nth-child(2){
+        width               :100%;
+        text-align          : center;
+        font-size           :1.5em;
+        font-weight         :600;
+    }
+    p:nth-child(3){
+        width               :100%;
+        text-align          : left;
+        font-size           :0.9em;
+        font-weight         :400;
+    }
+  
+}
+
+.card-item{
+    height              :30%;
+    width               :90%;
+    border              :1px solid $red;
+    border-radius       :20px;
+    display             : flex;
+    flex-direction      : row;
+    padding             :5px;
+    margin              :5px;
+    transition          :0.5s;
+    &:hover{
+        cursor          : pointer;
+        background-color: $red;;
+    }
+    &:hover p {
+        color           :white;
+    }
+    &:hover .card-title p {
+        color           :white;
+    }
+    &:hover .card-title .title-mid p .icon-video {
+        color           :white;
+    }
+    .img-card{
+        height          :100%;
+        width           :40%;
+        border-radius   :20px;
+        .loadable{
+            border-radius:20px !important;
+        }
+    }
+    .card-title{
+        width           : 60%;
+        height          :100%;
+        display         : flex;
+        flex-direction  : column;
+        justify-content : space-between;
+        padding         :5px;
+        .title-top{
+            width           : 100%;
+            height          : 35%;
+            display         : flex;
+            flex-direction  : row;
+            align-items     : center;
+            p{
+                font-size   :1.2em;
+                font-weight :600;
+                position    : relative;
+                left        :10px;
+            }
+            .img-small{
+                width           :40px;
+                height          :40px;
+                border-radius   :50%;
+                img{
+                    width       :100%;
+                    height      :100%;
+                    border-radius:50%;
+                }
+            }
+        }
+        .title-mid{
+            width               :100%;
+            height              :30%;
+            display             : flex;
+            justify-content     : space-between;
+            align-items         : center;
+            p{
+                width           :30%;
+                text-align      : left;
+                display         : flex;
+                align-items     : center;
+                justify-content : space-between;
+                margin          :0px  !important;
+                .icon-video{
+                    font-size   :25px;
+                    position    : relative;
+                    color       :$red;
+                }
+            }
+        }
+        .free{
+            font-size           :1em;
+            color               :$red;
+        }
+    }
+    
+}

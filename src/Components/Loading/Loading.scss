@@ -1,0 +1,38 @@
+$red:#d63031;
+
+.sweet-loading {
+    width:100%;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    p{
+      position: relative;
+      top:20px;
+      font-size:3em;
+      color:#27aae1;
+      span{
+        font-weight:700;
+        color:$red;
+      }
+    }
+    img{
+        width:150px;
+        height:150px;
+        transform: rotate(360deg);
+        // animation: 5s spinnow infinite linear;
+    }
+    .rotate {
+        animation: rotation 3s infinite linear;
+      }
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+}
