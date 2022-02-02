@@ -53,6 +53,15 @@ export default function RegLog(){
             console.log(arrFireStore[filter])
             var stringify = JSON.stringify(arrFireStore[filter])
             localStorage.setItem('loginGF',stringify)
+            toast.error(`Welcome to the Club \n ${arrFireStore[filter].name}`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }else {
             console.log('masuk ke else')
             const dataCustomer = res.profileObj
@@ -67,9 +76,19 @@ export default function RegLog(){
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
             var addAuth = await AuthDataService.addAuth(dataCustomer)
+            toast.error(`Welcome to the Club ${"\n"} ${dataCustomer.name}`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             console.log(addAuth)
             // dispatch(LoginRedux(dataCustomer,'google'))
         }
+        navigate('/')
 
 
         
@@ -149,7 +168,7 @@ export default function RegLog(){
             console.log(dataCust)
 
             if(dataCust){
-                toast.error(`Selamat Datang ${dataCust.name}`, {
+                toast.error(`Welcome to the Club ${"\n"} ${dataCust.name}`, {
                     position: "top-center",
                     autoClose: 2000,
                     hideProgressBar: false,

@@ -4,8 +4,8 @@ import Logo1 from '../../Assets/gorillalogops.png'
 import Logo2 from '../../Assets/newbggw.png'
 import {FiUser} from 'react-icons/fi'
 import {FaBars} from 'react-icons/fa'
-import {AiOutlineClose} from 'react-icons/ai'
-import {Link} from 'react-router-dom'
+import {AiOutlineClose,AiOutlineLogout} from 'react-icons/ai'
+
 import {
     Dropdown,
     DropdownToggle,
@@ -15,9 +15,13 @@ import {
   import Gym from '../../Assets/gym4.jpg'
   import {useDispatch,useSelector} from 'react-redux'
   import { Tabs, Tab, Row, Nav } from "react-bootstrap";
-  import { LoginRedux } from '../../redux/Actions';
+  import {Link,useParams,useNavigate} from 'react-router-dom'
+  import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Header(){
+    toast.configure()
     const dispatch=useDispatch()
+    const navigate = useNavigate()
     const Auth = useSelector(state=>state.Auth)
     //   SCROLL EFFECT HEADER START
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -93,6 +97,7 @@ export default function Header(){
 
     const [dataCustStorage,setDataCustStorage]=useState(undefined)
     const [isLogin,setIsLogin]=useState(false)
+    const [loginHover,setLoginHover]=useState(false)
     useEffect(()=>{
         if(dataCustStorage === undefined){
             let dataCust = JSON.parse(localStorage.getItem('loginGF'))
@@ -116,6 +121,29 @@ export default function Header(){
     },[])
 
 
+
+    const onMouseLeave=()=>{
+        setLoginHover(false)
+
+    }
+    const onMouseHover=()=>{
+        setLoginHover(true)
+    }
+
+    const logout = () =>{
+        localStorage.removeItem('loginGF')
+        toast.error(`Dont Leave me ${dataCustStorage.name}.... ok bye`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+        navigate('/')
+        setIsLogin(false)
+    }
     return (
         <>
             <div className="container-header-box">
@@ -132,10 +160,31 @@ export default function Header(){
                             <p>
                                 {
                                     isLogin ? 
-                                    <Link to={'#'} style={{textDecoration:'none'}}>
-                                        <FiUser className="icon-header"/>
-                                        <span>{dataCustStorage.name}</span>
-                                    </Link>
+
+                                    <div  style={{textDecoration:'none'}}>
+                                        {
+                                            loginHover ?
+                                            <>
+                                            <div className="logout-box"  
+                                                 onClick={logout}
+                                                onMouseLeave={onMouseLeave} >
+                                                <AiOutlineLogout className="icon-header"/>
+                                                <span>Logout</span>
+                                            </div>
+                                            </>
+                                            :
+                                            <>
+                                                <div className="successlogin" 
+                                                onMouseOver={onMouseHover} 
+                                                >
+                                                    <FiUser className="icon-header"/>
+                                                    <span>{dataCustStorage.name}</span>
+
+                                                </div>
+                                            </>
+                                        }
+                                        
+                                    </div>
                                     :
                                     <Link to={'/account/login'} style={{textDecoration:'none'}}>
                                         <FiUser className="icon-header"/>
@@ -240,10 +289,30 @@ export default function Header(){
                             <p>
                             {
                                     isLogin ? 
-                                    <Link to={'#'} style={{textDecoration:'none'}}>
-                                        <FiUser className="icon-header"/>
-                                        <span>{dataCustStorage.name}</span>
-                                    </Link>
+                                    <div style={{textDecoration:'none'}}>
+                                             {
+                                            loginHover ?
+                                            <>
+                                            <div className="logout-box"  
+                                                 onClick={logout}
+                                                onMouseLeave={onMouseLeave} >
+                                                <AiOutlineLogout className="icon-header"/>
+                                                <span>Logout</span>
+                                            </div>
+                                            </>
+                                            :
+                                            <>
+                                                <div className="successlogin" 
+                                                onMouseOver={onMouseHover} 
+                                                >
+                                                    <FiUser className="icon-header"/>
+                                                    <span>{dataCustStorage.name}</span>
+
+                                                </div>
+                                            </>
+                                        }
+                                        
+                                    </div>
                                     :
                                     <Link to={'/account/login'} style={{textDecoration:'none'}}>
                                         <FiUser className="icon-header"/>

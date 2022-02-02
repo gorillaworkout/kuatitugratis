@@ -55,10 +55,26 @@ $white:rgba(255,255,255,.9);
             justify-content :space-evenly;
             align-items     :center;
             flex-direction  :row;
+            transition:1s;
             p{
+                width       :100%;
                 margin      :0px;
                 a {
                     color   :$red;
+                }
+                .logout-box{
+                    width       :100%;
+                    // border:1px solid black;
+                    color       :$red;
+                    transition  :1s;
+                    &:hover{
+                        transform:translate(50px,0);
+                    }
+                }
+                .successlogin{
+                    color   :$red;
+                    transition:1s;
+                    
                 }
                 .icon-header{
                     font-size   :30px;
@@ -273,15 +289,38 @@ $white:rgba(255,255,255,.9);
             width           :20%;
             height          :100%;
             display         :flex;
-            justify-content :space-evenly;
+            justify-content :space-between;
             align-items     :center;
             flex-direction  :row;
+            transition      :1s;
             p{
+                width:100%;
                 margin      :0px;
                 color       :$white;
                 a {
                     color   :white;
                 }
+                div{
+                    transition:1s;
+                    
+                    .logout-box{
+                        width   :100%;
+                        color   :white;
+                        transition:1s;
+                        &:hover{
+                            transform:translate(50px,0);
+                        }
+                    }
+                    .successlogin{
+                        color   :white;
+                        transition:1s;
+                        // &:hover{
+                        //     transform:translate(50px,0);
+                        // }
+                        
+                    }
+                }
+                
                 .icon-header{
                     font-size   :30px;
                     color       :$white;
