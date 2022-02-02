@@ -9,7 +9,6 @@ import ImgEffect from '../../Components/Effect/img_effect'
 export default function SliderImg({arr}){
 
     const [allImage,setAllImage]=useState(undefined)
-    console.log(arr)
     const renderImage=()=>{
         return (
             <>

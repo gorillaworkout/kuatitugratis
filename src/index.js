@@ -7,13 +7,17 @@ import {BrowserRouter} from 'react-router-dom'
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap.css';
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from 'redux'
+import Reducers from './redux/Reducers'
+import Thunk from 'redux-thunk'
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider store={createStore(Reducers,{},applyMiddleware(Thunk))}> */}
+    <Provider store={createStore(Reducers,{},applyMiddleware(Thunk))}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -13,14 +13,23 @@ import {
     
   } from "reactstrap";
   import Gym from '../../Assets/gym4.jpg'
+  import {useDispatch,useSelector} from 'react-redux'
   import { Tabs, Tab, Row, Nav } from "react-bootstrap";
+  import { LoginRedux } from '../../redux/Actions';
 export default function Header(){
-
-
+    const dispatch=useDispatch()
+    const Auth = useSelector(state=>state.Auth)
     //   SCROLL EFFECT HEADER START
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isHeaderScroll,setIsHeaderScroll] = useState(false)
     const [toggleMenu,setToggleMenu]=useState(false)
+
+    const [isLoading,setIsLoading] =useState(Auth.isLoadingAuth)
+    console.log(Auth,' ini Auth redux')
+
+
+
+
     const handleScroll = () => {
         const position = window.pageYOffset;
         if(position > 0 ){
@@ -92,6 +101,13 @@ export default function Header(){
             if(dataCust){
                 setIsLogin(true)
                 // navigate('/')
+                if(dataCust.status === 'Athlete'){
+
+                }else if (dataCust.status === 'Coach'){
+
+                }else {
+                    dataCust.status = 'Athlete'
+                }
                 setDataCustStorage(dataCust)
             }else {
                 setIsLogin(false)

@@ -25,21 +25,18 @@ function App() {
   const [allAuth,setAllAuth]=useState([])
   const [allCourses,setAllCourses]=useState([])
 
+
   // const ref = firebase.firestore().collection('gorillaFitness')
 
   const getData= async ()=>{
     
    const data  = await AuthDataService.getAllAuth();
-   var arr = data.docs.map((doc)=>({
-     ...doc.data(), id:doc.id
-   }))
+ 
    setAllAuth(data.docs.map((doc)=>({...doc.data(),id:doc.id})))
 
    const Courses = await CoursesDataService.getAllCourses()
-   var arrCourses = Courses.docs.map((doc)=>({
-     ...doc.data(),id:doc.id
-   }))
-   setAllCourses(arrCourses.docs.map((doc)=>({...doc.data(),id:doc.id})))
+
+   setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
   }
     useEffect(()=>{
       getData()

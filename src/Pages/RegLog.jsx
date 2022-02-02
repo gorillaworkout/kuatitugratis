@@ -9,11 +9,14 @@ import {Link,useParams,useNavigate} from 'react-router-dom'
 import { FullPageLoading } from '../Components/Loading/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {LoginRedux} from '../redux/Actions/AuthActions'
+import {useDispatch,useSelector} from 'react-redux'
+import AuthDataService from '../Services/auth.services'
 export default function RegLog(){
     toast.configure()
+    const dispatch=useDispatch()
     const navigate = useNavigate()
     const {status} = useParams()
-    console.log(status)
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
     const [isRegister,setIsRegister]=useState(true)
@@ -23,40 +26,51 @@ export default function RegLog(){
     const [passwordCustomer,setPasswordCustomer]=useState('')
     const [statusSignUp, setStatusSignUp]=useState('athlete')
 
-    const [dataCustStorage,setDataCustStorage]=useState(undefined)
+    const [dataCustStorage,setDataCustStorage]=useState('athlete')
 
     const [isSignIn,setIsSignIn]=useState(true)
     
     
+    // dispatch(LoginRedux(token))
 
-
-    const onLoginSuccess = (res) => {
+    const onLoginSuccess = async(res) => {
         console.log('Login Success:', res.profileObj);
         setShowloginButton(false);
         setShowlogoutButton(true);
+        const data  = await AuthDataService.getAllAuth();
+        let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
+        console.log(arrFireStore)
+        var filter = arrFireStore.findIndex((val)=>{
+            console.log(val)
+            console.log(val.googleId, res.googleId)
+            return val.googleId === res.googleId
+        })
+        console.log(filter)
 
-        const dataCustomer = res.profileObj
-        var statusUser = statusSignUp
-        if(statusSignUp === 'register_athlete'){
-            statusUser = 'Athlete'
+        if(filter !== -1){
+            console.log('data ada')
+            console.log(filter)
+            console.log(arrFireStore[filter])
+            var stringify = JSON.stringify(arrFireStore[filter])
+            localStorage.setItem('loginGF',stringify)
+
         }else {
-            statusUser = 'Coach'
+            console.log('masuk ke else')
+            const dataCustomer = res.profileObj
+            var statusUser = statusSignUp
+            if(statusSignUp === 'register_athlete'){
+                statusUser = 'Athlete'
+            }else {
+                statusUser = 'Coach'
+            }
+            dataCustomer.status= statusUser
+    
+            // dispatch(LoginRedux(dataCustomer,'google'))
         }
-        dataCustomer.status= statusUser
 
-        var stringify = JSON.stringify(dataCustomer)
 
-        toast.error(`Selamat Datang ${dataCustomer.name}`, {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        localStorage.setItem('loginGF',stringify)
-        navigate('/')
+        
+        
 
 
     };
@@ -83,6 +97,7 @@ export default function RegLog(){
                 navigate('/')
                 setDataCustStorage(dataCust)
             }else {
+                console.log('masuk ke else 101')
                 setTimeout(()=>{
                     setIsLoading(false)
                 },1000)
@@ -226,7 +241,7 @@ export default function RegLog(){
                             <div className="box-to-login">
                                 <Link to={'/account/register_athlete'} style={{textDecoration:'none'}}>
                                     <p>Register as Athlete</p>
-                                        
+
                                 </Link>
                                 <Link to={'/'} style={{textDecoration:'none'}}>
                                     <p> <AiOutlineHome className="icon-user"/></p>
