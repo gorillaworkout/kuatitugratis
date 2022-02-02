@@ -26,7 +26,7 @@ export default function RegLog(){
     const [passwordCustomer,setPasswordCustomer]=useState('')
     const [statusSignUp, setStatusSignUp]=useState('athlete')
 
-    const [dataCustStorage,setDataCustStorage]=useState('athlete')
+    const [dataCustStorage,setDataCustStorage]=useState(undefined)
 
     const [isSignIn,setIsSignIn]=useState(true)
     
@@ -53,7 +53,6 @@ export default function RegLog(){
             console.log(arrFireStore[filter])
             var stringify = JSON.stringify(arrFireStore[filter])
             localStorage.setItem('loginGF',stringify)
-
         }else {
             console.log('masuk ke else')
             const dataCustomer = res.profileObj
@@ -64,7 +63,11 @@ export default function RegLog(){
                 statusUser = 'Coach'
             }
             dataCustomer.status= statusUser
-    
+            dataCustomer.skill =[]
+            dataCustomer.youtube=[]
+            dataCustomer.loginWithGoogle = true
+            var addAuth = await AuthDataService.addAuth(dataCustomer)
+            console.log(addAuth)
             // dispatch(LoginRedux(dataCustomer,'google'))
         }
 
@@ -74,6 +77,67 @@ export default function RegLog(){
 
 
     };
+
+    const onRegisterAthlete=async(res)=>{
+        console.log('Login Success:', res.profileObj);
+        setShowloginButton(false);
+        setShowlogoutButton(true);
+        const data  = await AuthDataService.getAllAuth();
+        let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
+        console.log(arrFireStore)
+        var filter = arrFireStore.findIndex((val)=>{
+            console.log(val)
+            console.log(val.googleId, res.googleId)
+            return val.googleId === res.googleId
+        })
+        if(filter !== -1){
+            console.log('data ada')
+            console.log(filter)
+            console.log(arrFireStore[filter])
+            var stringify = JSON.stringify(arrFireStore[filter])
+            localStorage.setItem('loginGF',stringify)
+        }else {
+            console.log('masuk ke else')
+            const dataCustomer = res.profileObj
+            var statusUser = 'Athlete'
+            dataCustomer.status= statusUser
+            dataCustomer.skill =[]
+            dataCustomer.youtube=[]
+            dataCustomer.loginWithGoogle = true
+            var addAuth = await AuthDataService.addAuth(dataCustomer)
+        }
+
+    }
+
+    const onRegisterCoach=async(res)=>{
+        console.log('Login Success:', res.profileObj);
+        setShowloginButton(false);
+        setShowlogoutButton(true);
+        const data  = await AuthDataService.getAllAuth();
+        let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
+        console.log(arrFireStore)
+        var filter = arrFireStore.findIndex((val)=>{
+            console.log(val)
+            console.log(val.googleId, res.googleId)
+            return val.googleId === res.googleId
+        })
+        if(filter !== -1){
+            console.log('data ada')
+            console.log(filter)
+            console.log(arrFireStore[filter])
+            var stringify = JSON.stringify(arrFireStore[filter])
+            localStorage.setItem('loginGF',stringify)
+        }else {
+            console.log('masuk ke else')
+            const dataCustomer = res.profileObj
+            var statusUser = 'Coach'
+            dataCustomer.status= statusUser
+            dataCustomer.skill =[]
+            dataCustomer.youtube=[]
+            dataCustomer.loginWithGoogle = true
+            var addAuth = await AuthDataService.addAuth(dataCustomer)
+        }
+    }
 
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
@@ -108,12 +172,12 @@ export default function RegLog(){
     useEffect(()=>{
         if(status === 'register_coach'){
             setIsSignIn(false)
-            setStatusSignUp('register_coach')
+            setStatusSignUp('Coach')
 
 
         }else if (status === 'register_athlete'){
             setIsSignIn(false)
-            setStatusSignUp('register_athlete')
+            setStatusSignUp('Athlete')
         }
         else if ( status === 'login'){
             setIsSignIn(true)
@@ -128,16 +192,6 @@ export default function RegLog(){
     }
 
     const onSignoutSuccess = () => {
-        //   alert("You have been logged out successfully");
-        //   toast.error('Berhasil Logout', {
-        //     position: "top-center",
-        //     autoClose: 2000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        // });
           console.clear();
           setShowloginButton(true);
           setShowlogoutButton(false);
@@ -151,13 +205,18 @@ export default function RegLog(){
         return re.test(String(email).toLowerCase());
         }
     const onInputEmail=(value,status)=>{
+        console.log(status)
         var checking_email = validateEmail(value)
 
         if(checking_email){
             if(status === 'register'){
                 console.log(value,status)
+                setEmailCustomer(value)
+                
             }else if ( status === 'login'){
                 console.log(value,status)
+                setEmailCustomer(value)
+                
             }
         }else {
             console.log('format email salah')
@@ -169,12 +228,108 @@ export default function RegLog(){
        
     }
 
-    const registerCustomer=()=>{
+    const registerCustomer=async()=>{
+        console.log(emailCustomer)
+        console.log(passwordCustomer)
+        console.log(statusSignUp)
+        var arr = {
+            email:emailCustomer,
+            familyname:emailCustomer,
+            givenName:emailCustomer,
+            googleId:'registerWithoutGoogle',
+            imageUrl:"https://lh3.googleusercontent.com/a/AATXAJwkYxgGG1SZCEz1wcoU7tuB0WQKf_1hAEdsCKp6=s96-c",
+            loginWithGoogle:false,
+            name:emailCustomer,
+            skill:[],
+            status:statusSignUp,
+            youtube:[],
+            password:passwordCustomer
+        }
+        // console.log('Login Success:', res.profileObj);
+       
+        const data  = await AuthDataService.getAllAuth();
+        let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
+        console.log(arrFireStore)
+        var filter = arrFireStore.findIndex((val)=>{
+            console.log(val)
+            return val.email === arr.email
+        })
+        if(filter !== -1){
+            console.log('data ada')
+            console.log(filter)
+            console.log(arrFireStore[filter])
+            var stringify = JSON.stringify(arrFireStore[filter])
+            localStorage.setItem('loginGF',stringify)
+            navigate('/')
+            setShowloginButton(false);
+            setShowlogoutButton(true);
+        }else {
 
+            if(emailCustomer !== '' && passwordCustomer !==''){
+                console.log('masuk ke else')
+                const dataCustomer = arr
+                
+                dataCustomer.status= statusSignUp
+                dataCustomer.skill =[]
+                dataCustomer.youtube=[]
+                dataCustomer.loginWithGoogle = true
+                var addAuth = await AuthDataService.addAuth(dataCustomer)
+                navigate('/')
+                setShowloginButton(false);
+                setShowlogoutButton(true);
+            }else {
+                toast.error('Username/Password is empty', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        }
+        
     }
 
-    const loginCustomer=()=>{
-        console.log('function login customer jlana')
+    const loginCustomer=async()=>{
+        console.log(emailCustomer)
+        console.log(passwordCustomer)
+        const data  = await AuthDataService.getAllAuth();
+        let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
+        console.log(arrFireStore)
+        var filter = arrFireStore.findIndex((val)=>{
+            console.log(val)
+            return val.email === emailCustomer && val.password === passwordCustomer
+        })
+        if(filter !== -1){
+            console.log('data ada')
+            console.log(filter)
+            console.log(arrFireStore[filter])
+            var stringify = JSON.stringify(arrFireStore[filter])
+            localStorage.setItem('loginGF',stringify)
+            navigate('/')
+            toast.error(`Selamat Datang ${emailCustomer}`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }else {
+            toast.error('Username/Password Salah', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+        }
     }
     // REGISTER LOGIN END
 
@@ -250,7 +405,7 @@ export default function RegLog(){
                     </div>
                     :
                     <>    
-                    {statusSignUp === 'register_coach'  ?  // REGISTER AS COACH
+                    {statusSignUp === 'Coach'  ?  // REGISTER AS COACH
                     <div className="reglog-card">
                          <p> <span>GORILLA</span>  FITNESS</p>
                              <p>Sign up as <span>Coach</span>  </p>
@@ -273,7 +428,7 @@ export default function RegLog(){
                                  <GoogleLogin
                                      clientId={OathClientId}
                                      buttonText="Register with Google"
-                                     onSuccess={onLoginSuccess}
+                                     onSuccess={onRegisterCoach}
                                      onFailure={onLoginFailure}
                                      cookiePolicy={'single_host_origin'}
                                      className="btn-google-real"
@@ -296,7 +451,7 @@ export default function RegLog(){
 
              
                          <div className="box-to-login">
-                            <Link to={'/account/register_athlete'} style={{textDecoration:'none'}} onClick={()=>setStatusSignUp('register_athlete')}>
+                            <Link to={'/account/register_athlete'} style={{textDecoration:'none'}} onClick={()=>setStatusSignUp('Athlete')}>
                                 <p>Sign up as Athlete</p>
                             </Link>
                              <p> <AiOutlineHome className="icon-user"/></p>
@@ -329,7 +484,7 @@ export default function RegLog(){
                                 <GoogleLogin
                                     clientId={OathClientId}
                                     buttonText="Register with Google"
-                                    onSuccess={onLoginSuccess}
+                                    onSuccess={onRegisterAthlete}
                                     onFailure={onLoginFailure}
                                     cookiePolicy={'single_host_origin'}
                                     className="btn-google-real"
@@ -352,7 +507,7 @@ export default function RegLog(){
 
             
                         <div className="box-to-login">
-                            <Link to={'/account/register_coach'} style={{textDecoration:'none'}} onClick={()=>setStatusSignUp('register_coach')}>
+                            <Link to={'/account/register_coach'} style={{textDecoration:'none'}} onClick={()=>setStatusSignUp('Coach')}>
                                 <p>Sign up as Coach</p>
                             </Link>
                             <p> <AiOutlineHome className="icon-user"/></p>

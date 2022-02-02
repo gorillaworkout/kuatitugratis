@@ -24,7 +24,7 @@ class AuthDataService {
     deleteAuth = (id) =>{
         const authDoc = doc(db,collectionID,id);
         return deleteDoc(authDoc)
-    }
+    } 
 
     getAllAuth =()=> {
         return getDocs(authCollectionRef)
