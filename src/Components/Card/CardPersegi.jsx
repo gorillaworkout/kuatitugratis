@@ -10,18 +10,17 @@ export default function CardPersegi({arr}){
                 <div className="box-img">
                     <ImgEffect
                         data={{
-                            img:Handstand,
+                            img:arr.img,
                             background:'#ccc',
                             height:'100% !important'
                         }}
                     />
-                    <p>Basic Cheerleading Kids</p>
+                    <p>{arr.title}</p>
                     <p>
-                        this class only for kids around 3-10Years old,<br/>
-                        learning how to do stunts,jumps,motion, dance
+                        {/* {arr.description} */}
                     </p>
                     <div className="price-tag">
-                        <p>FREE</p>
+                        <p>{arr.price}</p>
                     </div>
                 </div>
             </div>

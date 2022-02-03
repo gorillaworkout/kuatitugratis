@@ -116,14 +116,14 @@ export default function Profile(){
                         console.log(val,'ini val')
                         console.log(value.coursesID,'ini value')
                         return (
-                            <div className="list-class">
+                            <Link to={`/detail/${value.coursesID}`} className="list-class">
                                 <ul>
                                     <li>{value.coursesID}</li>
                                     <li>{value.title}</li>
                                     <li>{value.coach}</li>
                                     <li>{value.type}</li>
                                 </ul>
-                            </div>
+                            </Link>
                         )
                     }
                 })

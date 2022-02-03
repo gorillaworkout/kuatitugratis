@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect,useState } from 'react';
 import '../Styles/Classes.scss'
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
@@ -10,7 +10,97 @@ import { FullPageLoading } from '../Components/Loading/Loading';
 import CardPersegi from '../Components/Card/CardPersegi';
 import CardPersegiPanjang from '../Components/Card/CardPersegiPanjang';
 
+import CoursesDataService from '../Services/courses.services'
+import AuthDataService from '../Services/auth.services'
+import {Link,useParams,useNavigate} from 'react-router-dom'
+
 export default function Classes(){
+
+    const [dataCustStorage,setDataCustStorage]=useState(undefined)
+    const [isLoading,setIsLoading]=useState(true)
+    const [allCourses,setAllCourses] =useState(undefined)
+    const [allAuth,setAllAuth]=useState(undefined)
+    
+    // const [isAdd,setIsAdd]=useState(false)
+
+
+    const getAllCourses=async()=>{
+        let dataCust = JSON.parse(localStorage.getItem('loginGF'))
+        console.log(dataCust,' ini dataCust')
+        setDataCustStorage(dataCust)
+        const Courses = await CoursesDataService.getAllCourses()
+        const Auth = await AuthDataService.getAllAuth()
+        if(Courses && Auth){
+            setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
+            setAllAuth(Auth.docs.map((doc)=>({...doc.data(),id:doc.id})))
+            setIsLoading(false)
+        }else {
+
+        }
+    }
+    useEffect(()=>{
+        if(allCourses === undefined){
+            getAllCourses()
+        }else {
+
+        }
+    },[])
+
+
+
+    const renderAmazingCourses=()=>{
+
+
+        return allCourses.map((val,index)=>{
+            return (
+                <CardPersegi arr={{
+                    img:val.imageCourses,
+                    title:val.title,
+                    description:val.description,
+                    price:val.price
+
+                }}/>
+            )
+        })
+    }
+
+    const popularCourses=()=>{
+
+        return allCourses.map((val,index)=>{
+            return allAuth.map((item,id)=>{
+                if(val.coachID === item.coachID){
+            
+                    return (
+                        <>
+                            <CardPersegiPanjang arr={{
+                                img:val.imageCourses,
+                                imgCoach:item.imageUrl,
+                                coach:val.coach,
+                                price:val.price,
+                                title:val.title
+                            }}/>
+                        </>
+                    )
+                }
+            })
+        })
+    }
+
+    
+    if(isLoading){
+        return (
+            <>
+              <div className="box-loading">
+                  <FullPageLoading/>
+              </div>
+            </>
+        )
+    }
+
+
+
+
+    
 
     return (
         <>
@@ -21,10 +111,7 @@ export default function Classes(){
                         <div className="amazing-course">
                             <p>Amazing Courses</p>
                             <div className="box-card-amazing">
-                                <CardPersegi/>
-                                <CardPersegi/>
-                                <CardPersegi/>
-                                <CardPersegi/>
+                                {renderAmazingCourses()}
                             </div>
                         </div>
 
@@ -34,10 +121,7 @@ export default function Classes(){
                                     <p>Popular Courses</p>
                                 </div>
                                 <div className="card-left-box">
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
+                                    {popularCourses()}
                                 </div>
                             </div>
                             <div className="courses-right">
@@ -45,10 +129,7 @@ export default function Classes(){
                                     <p>Latest Courses</p>
                                 </div>
                                 <div className="card-left-box">
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
-                                    <CardPersegiPanjang/>
+                                   {popularCourses()}
                                 </div>
                             </div>
                         </div>

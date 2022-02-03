@@ -51,7 +51,7 @@ $bg-out:#D2E6E4;
 
             .card-detail-class{
                 width:95%;
-                height:40%;
+                height:70%;
                 border:1px solid $bg;
                 background-color: $bg;;
                 border-radius:20px;
@@ -82,14 +82,33 @@ $bg-out:#D2E6E4;
 
             .coach-detail-class{
                 width: 95%;
-                height: 50%;
-                background-color: $bg;;
+                height: 30%;
+                // background-color: $bg;;
                 margin-top:10px;
                 border-radius:20px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                justify-content: center;
                 padding:10px;
+                .button-add {
+                    width:200px;
+                    height:40px;
+                    border-radius:10px;
+                    border:1px solid white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color:white;
+                    color:$red;
+                    transition: 0.5s;
+                    &:hover{
+                        color:white;
+                        background-color:$red;
+                        border-color:$red;
+                        cursor: pointer;
+                    }
+                }
                 .box-img-coach{
                     width:30%;
                     height:90%;
