@@ -100,6 +100,11 @@ $bg-out:#D2E6E4;
                         display: flex;
                         align-items: center;
                         padding:10px;
+                        overflow: scroll;
+                        p{
+                            font-size:1em;
+                            color:$red;
+                        }
                         .card-skill{
                             width:130px;
                             height:30px;

@@ -17,7 +17,7 @@ import {
   import { Tabs, Tab, Row, Nav } from "react-bootstrap";
   import {Link,useParams,useNavigate} from 'react-router-dom'
   import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+  import 'react-toastify/dist/ReactToastify.css';
 export default function Header(){
     toast.configure()
     const dispatch=useDispatch()
@@ -260,6 +260,19 @@ export default function Header(){
                                                                         JOIN ONLINE AS ASTHLETE
                                                                     </Link>
                                                                 </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div className="hover-left-card">
+                                                            <ul>
+                                                                <li className="title-left-card">
+                                                                    Profile
+                                                                </li>
+                                                                <li>
+                                                                    <Link to={'/profile'} style={{textDecoration:'none'}}>
+                                                                        Update Profile
+                                                                    </Link>
+                                                                </li>
+                                                              
                                                             </ul>
                                                         </div>
                                                         

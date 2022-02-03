@@ -63,7 +63,6 @@ export default function RegLog(){
                 progress: undefined,
             });
         }else {
-            console.log('masuk ke else')
             const dataCustomer = res.profileObj
             var statusUser = statusSignUp
             if(statusSignUp === 'register_athlete'){
@@ -75,6 +74,8 @@ export default function RegLog(){
             dataCustomer.skill =[]
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
+            var findCoachId = arrFireStore.length + 1
+            dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
             toast.error(`Welcome to the Club ${"\n"} ${dataCustomer.name}`, {
                 position: "top-center",
@@ -123,6 +124,8 @@ export default function RegLog(){
             dataCustomer.skill =[]
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
+            var findCoachId = arrFireStore.length + 1
+            dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
         }
 
@@ -154,6 +157,8 @@ export default function RegLog(){
             dataCustomer.skill =[]
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
+            var findCoachId = arrFireStore.length + 1
+            dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
         }
     }
@@ -292,6 +297,8 @@ export default function RegLog(){
                 dataCustomer.skill =[]
                 dataCustomer.youtube=[]
                 dataCustomer.loginWithGoogle = true
+                var findCoachId = arrFireStore.length + 1
+                dataCustomer.coachID = findCoachId
                 var addAuth = await AuthDataService.addAuth(dataCustomer)
                 navigate('/')
                 setShowloginButton(false);
@@ -322,9 +329,6 @@ export default function RegLog(){
             return val.email === emailCustomer && val.password === passwordCustomer
         })
         if(filter !== -1){
-            console.log('data ada')
-            console.log(filter)
-            console.log(arrFireStore[filter])
             var stringify = JSON.stringify(arrFireStore[filter])
             localStorage.setItem('loginGF',stringify)
             navigate('/')
