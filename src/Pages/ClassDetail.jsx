@@ -7,12 +7,13 @@ import YouTube from 'react-youtube';
 import { FullPageLoading } from '../Components/Loading/Loading';
 import CoursesDataService from '../Services/courses.services'
 import {Link,useParams,useNavigate} from 'react-router-dom'
+import AuthDataService from '../Services/auth.services'
 export default function ClassDetail(){
 
     const {code} = useParams()
     const opts = {
-        height: '390',
-        width: '700px',
+        height: '350px',
+        width: '500px',
         playerVars: {
           // https://developers.google.com/youtube/player_parameters
           autoplay: 1,
@@ -32,14 +33,21 @@ export default function ClassDetail(){
 
     const getAllCourses=async()=>{
         let dataCust = JSON.parse(localStorage.getItem('loginGF'))
-        console.log(dataCust,' ini dataCust')
-        setDataCustStorage(dataCust)
-        const Courses = await CoursesDataService.getAllCourses()
-        if(Courses){
-            setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
-            setIsLoading(false)
-        }else {
 
+        if(dataCust){ // berarti udah login
+            const Auth = await AuthDataService.getAuth(dataCust.id)
+            setDataCustStorage(Auth.data())
+
+            console.log(dataCust,' ini dataCust')
+            const Courses = await CoursesDataService.getAllCourses()
+            if(Courses){
+                setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
+                setIsLoading(false)
+            }else {
+                // no courses from firestore
+            }
+        }else {
+            // blm login gpp. 
         }
     }
     useEffect(()=>{
@@ -85,7 +93,20 @@ export default function ClassDetail(){
         return (
             <>
                  <div className="youtube-box">
-                    <YouTube videoId={allCourses[findIndex].youtube} opts={opts} onReady={onReady} />
+                     <div className="card-yt">
+                        <YouTube videoId={allCourses[findIndex].youtube} opts={opts} onReady={onReady} />
+                        <div className="coach-detail-class">
+                            {
+                                isAdd ?
+                                <div className="button-add" onClick={tambahSkill}>
+                                    Tambahkan Class
+                                </div>
+                                :
+                                <>
+                                </>
+                            }
+                        </div>
+                     </div>
                 </div>
                 <div className="detail-classes">
                     <div className="card-detail-class">
@@ -96,20 +117,10 @@ export default function ClassDetail(){
                             {allCourses[findIndex].description}
                         </p>
                     </div>
-                    <div className="coach-detail-class">
-                        {/* <div className="box-img-coach">
-                            <img src={Handstand} alt="" />
-                        </div> */}
-                        {
-                            isAdd ?
-                            <div className="button-add" onClick={tambahSkill}>
-                                Tambahkan Class
-                            </div>
-                            :
-                            <>
-                            </>
-                        }
-                    </div>
+                    {/* <div className="coach-detail-class">
+                            <p>BADGE</p>
+                     
+                    </div> */}
                 </div>
             </>
         )
@@ -135,9 +146,9 @@ export default function ClassDetail(){
             <div className="box-main">
                 {renderTitle()}
             </div>
-            <div className="box-footer">
+            {/* <div className="box-footer">
                 <Footer/>
-            </div>
+            </div> */}
           </div>    
         </>
     )

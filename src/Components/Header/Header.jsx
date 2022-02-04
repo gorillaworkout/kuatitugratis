@@ -18,6 +18,8 @@ import {
   import {Link,useParams,useNavigate} from 'react-router-dom'
   import { toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+  import AuthDataService from '../../Services/auth.services'
+  import { FullPageLoading } from '../../Components/Loading/Loading'
 export default function Header(){
     toast.configure()
     const dispatch=useDispatch()
@@ -28,7 +30,7 @@ export default function Header(){
     const [isHeaderScroll,setIsHeaderScroll] = useState(false)
     const [toggleMenu,setToggleMenu]=useState(false)
 
-    const [isLoading,setIsLoading] =useState(Auth.isLoadingAuth)
+    const [isLoading,setIsLoading] =useState(false)
     console.log(Auth,' ini Auth redux')
 
 
@@ -98,28 +100,41 @@ export default function Header(){
     const [dataCustStorage,setDataCustStorage]=useState(undefined)
     const [isLogin,setIsLogin]=useState(false)
     const [loginHover,setLoginHover]=useState(false)
+
+    const fetchingUser=async()=>{
+        let dataCust = JSON.parse(localStorage.getItem('loginGF'))
+        if(dataCust){
+            // navigate('/')
+            if(dataCust.status === 'Athlete'){
+                
+            }else if (dataCust.status === 'Coach'){
+                
+            }else {
+                dataCust.status = 'Athlete'
+            }
+            const Auth = await AuthDataService.getAuth(dataCust.id)
+            setDataCustStorage(Auth.data())
+            setIsLoading(false)
+            setIsLogin(true)
+        }else {
+            setIsLogin(false)
+        }
+    }
     useEffect(()=>{
         if(dataCustStorage === undefined){
-            let dataCust = JSON.parse(localStorage.getItem('loginGF'))
-            console.log(dataCust)
-
-            if(dataCust){
-                setIsLogin(true)
-                // navigate('/')
-                if(dataCust.status === 'Athlete'){
-
-                }else if (dataCust.status === 'Coach'){
-
-                }else {
-                    dataCust.status = 'Athlete'
-                }
-                setDataCustStorage(dataCust)
-            }else {
-                setIsLogin(false)
-            }
+            
+            fetchingUser()
+        }else if (dataCustStorage) {
+            console.log('masuk ke sini 128')
+            setIsLogin(true)
         }
     },[])
 
+    const renderNameAfterLogin=()=>{
+      
+    //     <FiUser className="icon-header"/>
+    // <span>{dataCustStorage.name}</span>
+    } 
 
 
     const onMouseLeave=()=>{
@@ -143,6 +158,16 @@ export default function Header(){
         });
         navigate('/')
         setIsLogin(false)
+    }
+
+    if(isLoading){
+        return (
+            <>
+              <div className="box-loading">
+                  <FullPageLoading/>
+              </div>
+            </>
+        )
     }
     return (
         <>

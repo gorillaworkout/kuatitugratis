@@ -57,7 +57,8 @@ export default function Classes(){
                     img:val.imageCourses,
                     title:val.title,
                     description:val.description,
-                    price:val.price
+                    price:val.price,
+                    link:val.coursesID
 
                 }}/>
             )
@@ -77,7 +78,8 @@ export default function Classes(){
                                 imgCoach:item.imageUrl,
                                 coach:val.coach,
                                 price:val.price,
-                                title:val.title
+                                title:val.title,
+                                link:val.coursesID
                             }}/>
                         </>
                     )

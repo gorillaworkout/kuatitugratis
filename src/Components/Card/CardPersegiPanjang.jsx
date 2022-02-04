@@ -4,11 +4,12 @@ import ImgEffect from '../Effect/img_effect';
 import Handstand from '../../Assets/handstand.jpg'
 import {FiVideo} from 'react-icons/fi'
 import {BiTime} from 'react-icons/bi'
+import {Link} from 'react-router-dom'
 export default function CardPersegiPanjang({arr}){
 console.log(arr)
     return (
         <>
-            <div className="card-item">
+            <Link to={`/detail/${arr.link}`} className="card-item">
                 <div className="img-card">
                     <ImgEffect
                         data={{
@@ -32,7 +33,7 @@ console.log(arr)
                         <p className="free">{arr.price}</p>
                     </div>
                 </div>
-            </div>
+            </Link>
         </>
     )
 }

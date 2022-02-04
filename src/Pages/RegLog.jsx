@@ -51,7 +51,8 @@ export default function RegLog(){
             console.log('data ada')
             console.log(filter)
             console.log(arrFireStore[filter])
-            var stringify = JSON.stringify(arrFireStore[filter])
+
+            var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
             toast.error(`Welcome to the Club \n ${arrFireStore[filter].name}`, {
                 position: "top-center",
@@ -114,7 +115,7 @@ export default function RegLog(){
             console.log('data ada')
             console.log(filter)
             console.log(arrFireStore[filter])
-            var stringify = JSON.stringify(arrFireStore[filter])
+            var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
         }else {
             console.log('masuk ke else')
@@ -147,7 +148,7 @@ export default function RegLog(){
             console.log('data ada')
             console.log(filter)
             console.log(arrFireStore[filter])
-            var stringify = JSON.stringify(arrFireStore[filter])
+            var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
         }else {
             console.log('masuk ke else')
@@ -282,7 +283,7 @@ export default function RegLog(){
             console.log('data ada')
             console.log(filter)
             console.log(arrFireStore[filter])
-            var stringify = JSON.stringify(arrFireStore[filter])
+            var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
             navigate('/')
             setShowloginButton(false);
@@ -329,7 +330,7 @@ export default function RegLog(){
             return val.email === emailCustomer && val.password === passwordCustomer
         })
         if(filter !== -1){
-            var stringify = JSON.stringify(arrFireStore[filter])
+            var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
             navigate('/')
             toast.error(`Selamat Datang ${emailCustomer}`, {

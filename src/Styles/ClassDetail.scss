@@ -19,6 +19,7 @@ $bg-out:#D2E6E4;
     .box-header{
         width:100%;
         height:20%;
+        min-height:20%;
         // background-color: red;
         display: flex;
         justify-content: center;
@@ -26,12 +27,15 @@ $bg-out:#D2E6E4;
     }
     .box-main{
         width:100%;
-        height:65%;
+        height:100vh;
         // background-color: pink;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: row;
+        // overflow: scroll;
+        // position: relative;
+        // top:100px;
         .youtube-box{
             width:50%;
             height:100%;
@@ -39,19 +43,60 @@ $bg-out:#D2E6E4;
             display: flex;
             justify-content: center;
             align-items: center;
+            // border:1px solid red;
+
+            .card-yt{
+                width:80%;
+                height:80%;
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                border-radius:10px;
+                box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                
+                .coach-detail-class{
+                    width:100%;
+                    height:auto;
+                    padding:10px;
+                    padding-left:40px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                .button-add {
+                    width:200px;
+                    height:40px;
+                    border-radius:10px;
+                    border:1px solid $red;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color:white;
+                    color:$red;
+                    transition: 0.5s;
+                    &:hover{
+                        color:white;
+                        background-color:$red;
+                        border-color:$red;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
         .detail-classes{
             width:50%;
             height:95%;
-            border-left : 3px dashed $red;
+            // border:1px solid red;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
 
             .card-detail-class{
-                width:95%;
-                height:70%;
+                width:90%;
+                height:40%;
                 border:1px solid $bg;
                 background-color: $bg;;
                 border-radius:20px;
@@ -84,31 +129,15 @@ $bg-out:#D2E6E4;
                 width: 95%;
                 height: 30%;
                 // background-color: $bg;;
+                border:1px solid red;
                 margin-top:10px;
                 border-radius:20px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 padding:10px;
-                .button-add {
-                    width:200px;
-                    height:40px;
-                    border-radius:10px;
-                    border:1px solid white;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color:white;
-                    color:$red;
-                    transition: 0.5s;
-                    &:hover{
-                        color:white;
-                        background-color:$red;
-                        border-color:$red;
-                        cursor: pointer;
-                    }
-                }
+             
                 .box-img-coach{
                     width:30%;
                     height:90%;
