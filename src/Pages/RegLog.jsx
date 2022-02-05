@@ -78,6 +78,31 @@ export default function RegLog(){
             var findCoachId = arrFireStore.length + 1
             dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
+            const Auth = await AuthDataService.getAllAuth()
+            var allAuthFromFirestore =[]
+
+            Auth.docs.map((doc)=>{
+                allAuthFromFirestore.push({...doc.data(),id:doc.id})
+            })
+            console.log(allAuthFromFirestore)
+
+            let findIndexNew = allAuthFromFirestore.findIndex((val)=>{
+                return val.email === dataCustomer.email
+            })
+
+            console.log(findIndexNew)
+
+            if(findIndexNew !== -1 ){
+                let stringify = JSON.stringify({id:allAuthFromFirestore[findIndexNew].id})
+                localStorage.setItem('loginGF',stringify)
+            }else {
+                console.log('msk ke else')
+            }
+
+
+            
+            // var stringify = JSON.stringify({id:arrFireStore[filter].id})
+            // localStorage.setItem('loginGF',stringify)
             toast.error(`Welcome to the Club ${"\n"} ${dataCustomer.name}`, {
                 position: "top-center",
                 autoClose: 2000,
@@ -91,11 +116,6 @@ export default function RegLog(){
             // dispatch(LoginRedux(dataCustomer,'google'))
         }
         navigate('/')
-
-
-        
-        
-
 
     };
 

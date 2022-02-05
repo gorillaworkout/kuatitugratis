@@ -13,6 +13,7 @@ import CardPersegiPanjang from '../Components/Card/CardPersegiPanjang';
 import CoursesDataService from '../Services/courses.services'
 import AuthDataService from '../Services/auth.services'
 import {Link,useParams,useNavigate} from 'react-router-dom'
+import { doc } from 'firebase/firestore';
 
 export default function Classes(){
 
@@ -29,13 +30,23 @@ export default function Classes(){
         console.log(dataCust,' ini dataCust')
         setDataCustStorage(dataCust)
         const Courses = await CoursesDataService.getAllCourses()
+        var testing = []
+        Courses.docs.map((doc)=>(
+            
+            {...doc.data(),id:doc.id}))
+        console.log(testing)
+
+        Courses.docs.map((val,index)=>{
+            console.log(val)
+        })
+        
         const Auth = await AuthDataService.getAllAuth()
         if(Courses && Auth){
             setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
             setAllAuth(Auth.docs.map((doc)=>({...doc.data(),id:doc.id})))
             setIsLoading(false)
         }else {
-
+            console.log('masuk ke else 39')
         }
     }
     useEffect(()=>{
@@ -49,7 +60,7 @@ export default function Classes(){
 
 
     const renderAmazingCourses=()=>{
-
+        console.log(allCourses)
 
         return allCourses.map((val,index)=>{
             return (

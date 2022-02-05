@@ -31,8 +31,6 @@ export default function Header(){
     const [toggleMenu,setToggleMenu]=useState(false)
 
     const [isLoading,setIsLoading] =useState(false)
-    console.log(Auth,' ini Auth redux')
-
 
 
 
@@ -103,6 +101,7 @@ export default function Header(){
 
     const fetchingUser=async()=>{
         let dataCust = JSON.parse(localStorage.getItem('loginGF'))
+        console.log(dataCust.id)
         if(dataCust){
             // navigate('/')
             if(dataCust.status === 'Athlete'){
@@ -113,6 +112,8 @@ export default function Header(){
                 dataCust.status = 'Athlete'
             }
             const Auth = await AuthDataService.getAuth(dataCust.id)
+            var allAuth = Auth.data()
+            console.log(allAuth)
             setDataCustStorage(Auth.data())
             setIsLoading(false)
             setIsLogin(true)
