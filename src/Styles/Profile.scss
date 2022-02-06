@@ -398,14 +398,147 @@ $bg-out:#D2E6E4;
             .tab-content{
 
                 .tab-item{
+                    .new-box-item-tab{
+                        width:100%;
+                        height:400px;;
+                        display: flex;
+                        flex-direction: column;
+                        padding:10px;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        .item-left-profile{
+                            width:30%;
+                            height:100%;
+                            // border:1px solid pink;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .shadowbox-img  {
+                                // padding-top:5px;
+                                // padding-bottom:5px;
+                                display: flex;
+                                justify-content: space-evenly;
+                                align-items: center;
+                                width:90%;
+                                height:90%;
+                                // border:1px solid black;
+                                flex-direction: column;
+                                border-radius:10px;
+                                box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                                img{
+                                    width:90%;
+                                    height:80%;
+                                    border-radius:10px;
+                                    object-fit: cover;
+                                }
+                                .btn-changeimg{
+                                    width:90%;
+                                    height:10%;
+                                    border-radius:10px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    border:1px solid $red;
+                                    color:$red;
+                                    transition:0.5s;
+                                    &:hover{
+                                        cursor: pointer;
+                                        background-color: $red;
+                                        color:white;
+                                    }
+                                }
+                            }
+                        }
+                        .item-right-profile{
+                            width:70%;
+                            height:100%;
+                            display: flex;
+                            flex-direction: column;
+                            padding:10px;
+                            padding-top:20px;
+                            .title-bio{
+                                width:100%;
+                                font-size:1.2em;
+                                font-weight:700;
+                                color:gray;
+                            }
+                            .card-name{
+                                width:50%;
+                                height:50px;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: flex-start;
+                                align-items: center;
+                                .input-profile{
+                                    width:200px;
+                                    height:30px;
+                                    border-radius:5px;
+                                    border-color:$red;
+                                    border:1px solid $red;
+                                }
+                                p:nth-child(1){
+                                    width:30%;
+                                    display: flex;
+                                    align-items: center;
+                                    font-size:1em;
+                                    font-weight:700;
+                                    color:gray;
+
+                                }
+                                p:nth-child(2){
+                                    width:auto;
+                                    margin-right:10px;
+                                    margin-left:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    font-size:1em;
+                                    font-weight:500;
+                                    color:gray;
+                                }
+                                p:nth-child(3){
+                                    width:auto;
+                                    margin-right:10px;
+                                    margin-left:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    left:10px;
+                                    color:$red;
+                                    transition:0.5s;
+                                    &:hover{
+                                        transition:0.5s;
+                                        cursor: pointer;
+                                        color:#febf43;
+                                        font-weight:700;
+                                    }
+                                }
+                            }
+                            .btn-password{
+                                width:20%;
+                                height:8%;
+                                border-radius:10px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border:1px solid $red;
+                                color:$red;
+                                transition:0.5s;
+                                &:hover{
+                                    cursor: pointer;
+                                    background-color: $red;
+                                    color:white;
+                                }
+                            }
+                        }
+                    }
                     .box-item-tab{
                         width:100%;
                         height:400px;;
                         display: flex;
-                        flex-direction: row;
-                        padding:10px;
-                        justify-content: space-between;
-                        flex-wrap: wrap;
+                        flex-direction: column;
+                        // padding:10px;
+                        // justify-content: space-between;
+                        // flex-wrap: wrap;
                         // border:1px solid red;
                         .item-left-profile{
                             width:30%;
@@ -543,13 +676,326 @@ $bg-out:#D2E6E4;
                             border:1px solid $red;
                             background-color:$red;
                             color:white;
+                            margin:5px;
                         }
+                        .box-for-btn{
+                            width:100%;
+                            height:70px;
+                            min-height:70px;
+                            border-top:1px solid #dedede;
+                            border-bottom:1px solid #dedede;
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            padding-left:10px;
+                            .btn-tambah-skill{
+                                width:200px;
+                                height:40px;
+                                border-radius:8px;
+                                border:1px solid $red;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                transition:0.5s;
+                                color:$red;
+                                &:hover{
+                                    cursor: pointer;
+                                    background-color: $red;
+                                    color:white;
+                                }
+                            }
+                        }
+                        .box-render-card{
+                            width: 100%;
+                            height: 90%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            // flex-direction: row;
+                            // align-items: center;
+                            padding:10px;
+
+                            .box-detail-courses{
+                                height:20%;
+                                width:100%;
+                                // border:1px solid red;
+                                ul{
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    height:100%;
+                                    margin:0px !important;
+                                    padding:0px !important;
+                                    list-style-type: none;
+                                    border-top:1px solid #dedede;
+                                    border-bottom:1px solid #dedede;
+                                  
+                                    li {
+                                        width:25%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        color:$red;
+                                        font-size:1em;
+                                        font-weight:700;
+        
+                                    }
+                                    li:nth-child(odd){
+                                        // border-right:1px solid $red;
+                                        // border-left:1px solid $red;    
+                                    }
+                                    
+                                }
+                            }
+                            .box-render-courses{
+                                height:70%;
+                                width:100%;
+                                display: flex;
+                                flex-direction: column;
+                                overflow: scroll;
+                                // border:1px solid red;
+                                ul{
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    height:30%;
+                                    min-height:30%;
+                                    margin:0px !important;
+                                    padding:0px !important;
+                                    list-style-type: none;
+                                    // border-top:1px solid #dedede;
+                                    border-bottom:1px solid #dedede;
+                                    transition:0.5s;
+                                    &:hover{
+                                        cursor: pointer;
+                                        background-color: $red;
+                                    }
+                                    &:hover li{
+                                        color:white;
+                                    }
+                                  
+                                    li {
+                                        width:25%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        color:$red;
+                                        font-size:0.7em;
+                                        font-weight:700;
+                                        overflow: scroll;
+                                        padding-top:30px;
+                                        padding-bottom:30px;
+        
+                                    }
+                                    li:nth-child(odd){
+                                        // border-right:1px solid $red;
+                                        // border-left:1px solid $red;    
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        .box-render-card-courses{
+                            width: 100%;
+                            height: 90%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            // flex-direction: row;
+                            // align-items: center;
+                            padding:10px;
+
+                            .box-detail-courses{
+                                height:20%;
+                                width:100%;
+                                // border:1px solid red;
+                                ul{
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    height:100%;
+                                    margin:0px !important;
+                                    padding:0px !important;
+                                    list-style-type: none;
+                                    border-top:1px solid #dedede;
+                                    border-bottom:1px solid #dedede;
+                                  
+                                    li {
+                                        width:25%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        color:$red;
+                                        font-size:1em;
+                                        font-weight:700;
+        
+                                    }
+                                    li:nth-child(odd){
+                                        // border-right:1px solid $red;
+                                        // border-left:1px solid $red;    
+                                    }
+                                    
+                                }
+                            }
+                            .box-render-courses{
+                                height:70%;
+                                width:100%;
+                                display: flex;
+                                flex-direction: column;
+                                overflow: scroll;
+                                // border:1px solid red;
+                                ul{
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    height:30%;
+                                    min-height:30%;
+                                    margin:0px !important;
+                                    padding:0px !important;
+                                    list-style-type: none;
+                                    // border-top:1px solid #dedede;
+                                    border-bottom:1px solid #dedede;
+                                    transition:0.5s;
+                                    &:hover{
+                                        cursor: pointer;
+                                        background-color: $red;
+                                    }
+                                    &:hover li{
+                                        color:white;
+                                    }
+                                  
+                                    li {
+                                        width:25%;
+                                        height: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        color:$red;
+                                        font-size:0.7em;
+                                        font-weight:700;
+                                        // overflow: scroll;
+                                        padding-top:30px;
+                                        padding-bottom:30px;
+        
+                                    }
+                                    li:nth-child(odd){
+                                        // border-right:1px solid $red;
+                                        // border-left:1px solid $red;    
+                                    }
+                                    
+                                }
+                            }
+                        }
+
                     }
+                    
                 }
             }
             
         }
         
         
+    }
+    // modals bootstrap
+    
+    
+}
+.modal {
+    .modals-experience{
+        .modal-content {
+            height:400px !important;
+            .modal-body-exp{
+                width:100%;
+                height:100%;
+                display: flex;
+                flex-direction: column;
+                padding:10px;
+                // justify-content: space-evenly;
+                .input-card {
+                    width:80%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    padding-left:10px;
+                    padding-right:10px;
+                    align-items: center;
+                    border:1px solid gray;
+                    border-radius:5px;
+                    margin:5px;
+                    &:focus-within {
+                        border:1px solid $red;
+                    }
+                    .icon-user{
+                        font-size:20px;
+                        color:$red;
+                    }
+                    .input-box-register{
+                        width:95%;
+                        height:40px;
+                        border-radius:5px;
+                        border:none;
+                        position: relative;
+                        left:5px;
+                        &:focus{
+                            outline: none;
+                            
+                            border-color: $red;
+                            color:$red;
+                            // box-shadow: 0 0 10px #719ECE;
+                        }
+                        &:active {
+                            color:$red;
+                            border-color:$red;
+                        }
+                    }
+                }
+                .input-card-file {
+                    width:80%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    padding-left:10px;
+                    padding-right:10px;
+                    align-items: center;
+                    // border:1px solid gray;
+                    border-radius:5px;
+                    margin:5px;
+                    // &:focus-within {
+                    //     border:1px solid $red;
+                    // }
+                    .icon-user{
+                        font-size:20px;
+                        color:$red;
+                    }
+                    .input-box-register-file{
+                        width:95%;
+                        height:40px;
+                        border-radius:5px;
+                        border:none;
+                        position: relative;
+             
+                    }   
+                }
+                .btn-simpan-exp{
+                    width:200px;
+                    height:40px;
+                    border-radius:4px;
+                    border:1px solid $red;
+                    display:flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    top:20px;
+                    background-color: $red;
+                    color:white;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
 }

@@ -75,6 +75,7 @@ export default function RegLog(){
             dataCustomer.skill =[]
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
+            dataCustomer.classes = []
             var findCoachId = arrFireStore.length + 1
             dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
@@ -124,8 +125,12 @@ export default function RegLog(){
         setShowloginButton(false);
         setShowlogoutButton(true);
         const data  = await AuthDataService.getAllAuth();
+        var allAuthArr = []
         let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
-        console.log(arrFireStore)
+        data.docs.map((doc)=>{
+            allAuthArr.push({...doc.data(),id:doc.id})
+        })
+        let findIndexNewRegister = allAuthArr.length+1
         var filter = arrFireStore.findIndex((val)=>{
             console.log(val)
             console.log(val.googleId, res.googleId)
@@ -145,9 +150,13 @@ export default function RegLog(){
             dataCustomer.skill =[]
             dataCustomer.youtube=[]
             dataCustomer.loginWithGoogle = true
+            dataCustomer.classes = []
             var findCoachId = arrFireStore.length + 1
             dataCustomer.coachID = findCoachId
             var addAuth = await AuthDataService.addAuth(dataCustomer)
+            var stringify = JSON.stringify({id:findIndexNewRegister})
+            localStorage.setItem('loginGF',stringify)
+            
         }
 
     }
@@ -216,15 +225,18 @@ export default function RegLog(){
 
     useEffect(()=>{
         if(status === 'register_coach'){
+            console.log('226')
             setIsSignIn(false)
             setStatusSignUp('Coach')
 
 
         }else if (status === 'register_athlete'){
+            console.log('231')
             setIsSignIn(false)
             setStatusSignUp('Athlete')
         }
         else if ( status === 'login'){
+            console.log('237')
             setIsSignIn(true)
         }else {
             navigate('/')
@@ -274,9 +286,6 @@ export default function RegLog(){
     }
 
     const registerCustomer=async()=>{
-        console.log(emailCustomer)
-        console.log(passwordCustomer)
-        console.log(statusSignUp)
         var arr = {
             email:emailCustomer,
             familyname:emailCustomer,
@@ -288,21 +297,23 @@ export default function RegLog(){
             skill:[],
             status:statusSignUp,
             youtube:[],
-            password:passwordCustomer
+            password:passwordCustomer,
+            classes:[]
         }
         // console.log('Login Success:', res.profileObj);
        
         const data  = await AuthDataService.getAllAuth();
         let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
-        console.log(arrFireStore)
+        var allAuthArr = []
+        data.docs.map((doc)=>{
+            allAuthArr.push({...doc.data(),id:doc.id})
+        })
+        let findIndexNewRegister = allAuthArr.length+1
         var filter = arrFireStore.findIndex((val)=>{
             console.log(val)
             return val.email === arr.email
         })
         if(filter !== -1){
-            console.log('data ada')
-            console.log(filter)
-            console.log(arrFireStore[filter])
             var stringify = JSON.stringify({id:arrFireStore[filter].id})
             localStorage.setItem('loginGF',stringify)
             navigate('/')
@@ -311,19 +322,31 @@ export default function RegLog(){
         }else {
 
             if(emailCustomer !== '' && passwordCustomer !==''){
-                console.log('masuk ke else')
                 const dataCustomer = arr
-                
                 dataCustomer.status= statusSignUp
                 dataCustomer.skill =[]
                 dataCustomer.youtube=[]
                 dataCustomer.loginWithGoogle = true
+                dataCustomer.classes = []
                 var findCoachId = arrFireStore.length + 1
                 dataCustomer.coachID = findCoachId
                 var addAuth = await AuthDataService.addAuth(dataCustomer)
+                // console.log(addAuth._key.path.segments[1])
+                let idCustomer = addAuth._key.path.segments[1]
+                var stringify = JSON.stringify({id:idCustomer})
+                localStorage.setItem('loginGF',stringify)
                 navigate('/')
                 setShowloginButton(false);
                 setShowlogoutButton(true);
+                toast.error(`Welcome to the Club \n ${emailCustomer}`, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }else {
                 toast.error('Username/Password is empty', {
                     position: "top-center",

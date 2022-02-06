@@ -14,6 +14,9 @@ import { FullPageLoading } from '../Components/Loading/Loading'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import Bayu from '../Assets/bayu.JPG'
+import {GiStrong} from 'react-icons/gi'
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+
 export default function Profile(){
     toast.configure()
     const [key, setKey] = useState('home');
@@ -21,6 +24,17 @@ export default function Profile(){
     const [isGantiEmail,setIsGantiEmail]=useState(false)
     const [namaProfile,setNamaProfile]=useState('')
     const [emailProfile,setEmailProfile]=useState('')
+    const [openExperience,setOpenExperience]=useState(false)
+    const [openSkill,setOpenSkill]=useState(false)
+    const [openCourses,setOpenCourses]=useState(false)
+    const [addExperience, setAddExperience]=useState('')
+    const [addSkill,setAddSkill]=useState('')
+    const [addImage,setAddImage]=useState(undefined)
+
+    const [addCourses,setAddCourses]=useState('')
+    const [addType,setAddType]=useState('')
+    const [addYoutube,setAddYoutube]=useState('')
+    const [addDescription,setAddDescription]=useState('')
 
     const navigate = useNavigate()
     const opts = {
@@ -46,22 +60,41 @@ export default function Profile(){
         const [isLogin,setIsLogin]=useState(false)
         const [loginHover,setLoginHover]=useState(false)
         const [allCourses,setAllCourses] =useState(undefined)
-
+        // const [idProfile,setIdProfile]=useState('')
+        
         const getAllCoursesFromFS =async()=>{
             let dataCust = JSON.parse(localStorage.getItem('loginGF'))
+            // setIdProfile(dataCust.id)
             const Courses = await CoursesDataService.getAllCourses()
             
-            console.log(Courses)
+            // console.log(Courses)
             if(dataCust){
-                console.log(Courses)
+                // console.log(Courses)
                 const Auth = await AuthDataService.getAuth(dataCust.id)
-                setDataCustStorage(Auth.data())
-                setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
-                setIsLogin(true)
-                setStatus(Auth.data().status)
-                setIsLoading(false)
-                setNamaProfile(Auth.data().name)
-                setEmailProfile(Auth.data().email)
+                const allAuth = await AuthDataService.getAllAuth()
+                var allAuthArr = []
+                allAuth.docs.map((doc)=>(allAuthArr.push({...doc.data(),id:doc.id})))
+                console.log(allAuthArr)
+                let findIndexActive = allAuthArr.findIndex((val)=>{
+                    console.log(val.id,dataCust.id)
+                    return val.id === dataCust.id
+                })
+                console.log(findIndexActive)
+                if(findIndexActive !== -1){
+                    setDataCustStorage(allAuthArr[findIndexActive])
+                    setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
+                    setStatus(allAuthArr[findIndexActive].status)
+                    setNamaProfile(allAuthArr[findIndexActive].name)
+                    setEmailProfile(allAuthArr[findIndexActive].email)
+                    setIsLogin(true)
+                    setIsLoading(false)
+                    // setStatus(Auth.data().status)
+                    // setNamaProfile(Auth.data().name)
+                    // setEmailProfile(Auth.data().email)
+                }
+          
+                
+                
             }else {
                 setIsLogin(false)
                 toast.error(`Login First!`, {
@@ -112,7 +145,7 @@ export default function Profile(){
                 }else {
                     return (
                         <>
-                            <p>YOU HAVE NO SKILL! FIND YOUR CLASS AND GET YOUR SKILL </p>
+                            {/* <p>YOU HAVE NO SKILL! FIND YOUR CLASS AND GET YOUR SKILL </p> */}
                         </>
                     )
                 }
@@ -124,35 +157,89 @@ export default function Profile(){
         const renderClassesAthlete=()=>{
            console.log(allCourses)
 
-            return dataCustStorage.classes.map((val,index)=>{
-                return allCourses.map((value,id)=>{
-                    if(val === value.coursesID){
-                        console.log(val,'ini val')
-                        console.log(value.coursesID,'ini value')
-                        return (
-                            <Link to={`/detail/${value.coursesID}`} className="list-class">
-                                <ul>
-                                    <li>{value.coursesID}</li>
-                                    <li>{value.title}</li>
-                                    <li>{value.coach}</li>
-                                    <li>{value.type}</li>
-                                </ul>
-                            </Link>
-                        )
-                    }
-                })
-            })
+           if(dataCustStorage.classes){
+               return dataCustStorage.classes.map((val,index)=>{
+                   return allCourses.map((value,id)=>{
+                       if(val === value.coursesID){
+                           console.log(val,'ini val')
+                           console.log(value.coursesID,'ini value')
+                           return (
+                               <Link to={`/detail/${value.coursesID}`} className="list-class">
+                                   <ul>
+                                       <li>{value.coursesID}</li>
+                                       <li>{value.title}</li>
+                                       <li>{value.coach}</li>
+                                       <li>{value.type}</li>
+                                   </ul>
+                               </Link>
+                           )
+                       }
+                   })
+               })
+           }else {
+               console.log('masuk ke else render classes athlete')
+           }
         }
 
 
         const renderExperience=()=>{
-            return dataCustStorage.experience.map((val,index)=>{
+            if(dataCustStorage.experience){
+                if(dataCustStorage.experience.length > 0){
+                    return dataCustStorage.experience.map((val,index)=>{
+                        return (
+                            <div className="btn-experience">
+                                {val}
+                            </div>
+                        )
+                    })
+                }else {
+                    console.log('masuk ke else kosong')
+                }
+            }else {
                 return (
-                    <div className="btn-experience">
-                        {val}
-                    </div>
+                    <>
+
+                    </>
                 )
-            })
+            }
+        }
+        const renderCoursesCoach=()=>{
+            console.log(allCourses)
+            
+            if(allCourses && dataCustStorage){
+                if(dataCustStorage.classes !== undefined){
+                    console.log(allCourses !==undefined && dataCustStorage !== undefined)
+                    return allCourses.map((val,index)=>{
+                        return dataCustStorage.classes.map((value,id)=>{
+                            if(val.coursesID === value){
+                                return (
+                                    <>
+                                        <ul>
+                                            <li>{val.coursesID}</li>
+                                            <li>{val.title}</li>
+                                            <li>{val.youtube}</li> 
+                                            <li>{val.type}</li>
+                                        </ul>
+                                    </>
+                                )
+                            }
+                        })
+                    })
+
+                }else {
+                    return (
+                        <>
+                            <p>oops, you have no skill bro</p>
+                        </>
+                    )
+                }
+            }else {
+                return (
+                    <>
+                        <p>oops, you have no skill bro</p>
+                    </>
+                )
+            }
         }
 
 
@@ -161,17 +248,88 @@ export default function Profile(){
         }
         const simpanNama=async()=>{
             console.log(namaProfile)
-            // const getData = await AuthDataService.getAuth(dataCustStorage.id)
-            // console.log(getData)
-            // console.log(getData.data())
-            // var validData = getData.data()
-            // validData.nama
-            // console.log(dataCustStorage.id)
             const update = await AuthDataService.updateAuth(dataCustStorage.id,{name:namaProfile})
-            console.log(update)
+            toast.success(`${namaProfile} Berhasil disimpan`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setNamaProfile(namaProfile)
             setIsGantiNama(false)
         }
 
+
+        // const addExperience=()=>{
+
+        // }
+
+        const finalSaveExp=async()=>{
+            
+            console.log(dataCustStorage)
+            var allExp = dataCustStorage.experience
+            allExp.push(addExperience)
+            console.log(dataCustStorage.id,'id profile')
+            
+            const update = await AuthDataService.updateAuth(dataCustStorage.id,{experience:allExp})
+            setOpenExperience(false)
+            
+        }
+
+        const finalSaveSkill=async()=>{
+            console.log(dataCustStorage)
+            var allSkill = dataCustStorage.skill
+            allSkill.push(addSkill)
+            console.log(dataCustStorage.id,'id profile')
+            
+            const update = await AuthDataService.updateAuth(dataCustStorage.id,{skill:allSkill})
+            toast.success(`${addSkill} Berhasil ditambahkan`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setOpenSkill(false)
+        }
+
+        const finalSaveCourses=async()=>{
+            var allCoursesArr = allCourses
+            let findCoursesID = allCoursesArr.length + 1
+
+            let newCourses = {
+                coach:'BAYU DARMAWAN',
+                coachID:dataCustStorage.coachID,
+                coursesID:findCoursesID,
+                description:addDescription,
+                imageCourses:addImage,
+                price:'FREE',
+                title:addCourses,
+                type:addType,
+                youtube:addYoutube
+            }
+            allCoursesArr.push(newCourses)
+            let allClassAuth = dataCustStorage.classes
+            allClassAuth.push(findCoursesID)
+            const update = await CoursesDataService.addCourses(newCourses)
+            const updateAuth = await AuthDataService.updateAuth(dataCustStorage.id,{classes:allClassAuth})
+            toast.success(`${addCourses} Berhasil ditambahkan`, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setOpenCourses(false)
+
+        }
 
         const onHandleName=(value)=>{
             setNamaProfile(value)
@@ -193,89 +351,278 @@ export default function Profile(){
                 </div>
                 <div className="container-body">
                     <div className="card-profile">
-                        <Tabs
+                        {
+                            status === 'Coach'?
+                            <>
+                            <Tabs
                             id="controlled-tab-example"
                             activeKey={key}
                             onSelect={(k) => setKey(k)}
                             className="mb-3 tabs-coach"
                             >
-                            <Tab eventKey="home" title="Biodata Diri" className="tab-item">
-                                <div className="box-item-tab">
-                                    <div className="item-left-profile">
-                                        <div className="shadowbox-img">
-                                            <img src={dataCustStorage.imageUrl} alt="" />
-                                            <div className="btn-changeimg">
-                                                Pilih Foto
+                                <Tab eventKey="home" title="Biodata Diri" className="tab-item">
+                                    <div className="new-box-item-tab">
+                                        <div className="item-left-profile">
+                                            <div className="shadowbox-img">
+                                                <img src={dataCustStorage.imageUrl} alt="" />
+                                                <div className="btn-changeimg">
+                                                    Pilih Foto
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-right-profile">
+                                            <p className="title-bio">Ubah Biodata Diri</p>
+                                            <div className="card-name">
+                                                <p>Nama</p>
+                                                {
+                                                    isGantiNama ? 
+                                                    <>
+                                                        <input type="text"  defaultValue={namaProfile} className="input-profile" onChange={(e)=>onHandleName(e.target.value)} />
+                                                        <p onClick={simpanNama}>Simpan</p>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <p>{dataCustStorage.name}</p>
+                                                        <p onClick={ubahNama}>Ubah</p>
+                                                    </>
+                                                }
+                                            </div>
+                                            <div className="card-name">
+                                                <p>Email</p>
+                                                    
+                                                    <>
+                                                        <p>{dataCustStorage.email}</p>
+                                                        {/* <p onClick={ubahEmail}>Ubah</p> */}
+                                                    </>
+                                                
+                                            </div>
+                                            <div className="card-name">
+                                                <p>Status</p>
+                                                <p>{dataCustStorage.status}</p>
+                                                {/* <p>Ubah</p> */}
+                                            </div>
+
+                                            <div className="btn-password">
+                                                Ganti Password
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="item-right-profile">
-                                        <p className="title-bio">Ubah Biodata Diri</p>
-                                        <div className="card-name">
-                                            <p>Nama</p>
+                                </Tab>
+                                <Tab eventKey="profile" title="Experience" className="tab-item">
+                                    <div className="box-item-tab">
+                                    <Modal isOpen={openExperience} className="modals-experience" centered toggle={() => setOpenExperience(false)}>
+                                        <ModalHeader>
+                                        Add Experience
+                                        </ModalHeader>
+                                        <ModalBody className="modal-body-exp" style={{height:'500px !important'}}>
+                                            <div className="input-card" tabIndex={0}>
+                                                <GiStrong className="icon-user"/>
+                                                <input type="text" className="input-box-register" placeholder='Your Experience' onChange={(e)=>setAddExperience(e.target.value)}  />
+                                            </div>
+                                            <div className="btn-simpan-exp" onClick={finalSaveExp}>
+                                                Save
+                                            </div>
+                                        </ModalBody>
+                                    </Modal>
+                                        <div className="box-for-btn">
                                             {
-                                                isGantiNama ? 
-                                                <>
-                                                    <input type="text"  defaultValue={namaProfile} className="input-profile" onChange={(e)=>onHandleName(e.target.value)} />
-                                                    <p onClick={simpanNama}>Simpan</p>
-                                                </>
+                                                status === 'Coach'?
+                                                <div className="btn-tambah-skill" onClick={()=>setOpenExperience(true)}>
+                                                    Add Experience
+                                                </div>
                                                 :
                                                 <>
-                                                    <p>{dataCustStorage.name}</p>
-                                                    <p onClick={ubahNama}>Ubah</p>
                                                 </>
                                             }
                                         </div>
-                                        <div className="card-name">
-                                            <p>Email</p>
-                                                
-                                                <>
-                                                    <p>{dataCustStorage.email}</p>
-                                                    {/* <p onClick={ubahEmail}>Ubah</p> */}
-                                                </>
-                                            
-                                        </div>
-                                        <div className="card-name">
-                                            <p>Status</p>
-                                            <p>Athlete</p>
-                                            {/* <p>Ubah</p> */}
-                                        </div>
-
-                                        <div className="btn-password">
-                                            Ganti Password
+                                        <div className="box-render-card">
+                                            {renderExperience()}    
                                         </div>
                                     </div>
-                                </div>
-                            </Tab>
-                            <Tab eventKey="profile" title="Experience" className="tab-item">
-                                <div className="box-item-tab">
-                                    {renderExperience()}
-                                </div>
-                            </Tab>
-                            <Tab eventKey="contact" title="Skill" className="tab-item">
-                                <div className="box-item-tab">
-                                    {renderSkill()}
-                                </div>
-                            </Tab>
-                            {
-                            status === 'Coach' ? 
-                            <>
+                                </Tab>
+                                <Tab eventKey="contact" title="Skill" className="tab-item">
+                                    <div className="box-item-tab">
+                                        <Modal isOpen={openSkill} className="modals-experience" centered toggle={() => setOpenSkill(false)}>
+                                            <ModalHeader>
+                                            Add Skill
+                                            </ModalHeader>
+                                            <ModalBody className="modal-body-exp" style={{height:'500px !important'}}>
+                                                <div className="input-card" tabIndex={0}>
+                                                    <GiStrong className="icon-user"/>
+                                                    <input type="text" className="input-box-register" placeholder='Your Experience' onChange={(e)=>setAddSkill(e.target.value)}  />
+                                                </div>
+                                                <div className="btn-simpan-exp" onClick={finalSaveSkill}>
+                                                    Save
+                                                </div>
+                                            </ModalBody>
+                                        </Modal>
+                                        <div className="box-for-btn">
+                                            {
+                                                status  === 'Coach'?
+                                                <div className="btn-tambah-skill" onClick={()=>setOpenSkill(true)}>
+                                                    Add Skill
+                                                </div>
+                                            :
+                                                <>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className="box-render-card">
+                                            {renderSkill()}
+                                        </div>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="Courses" title="Upload Courses" className="tab-item">
+                                        <div className="box-item-tab">
+                                            <Modal isOpen={openCourses} className="modals-experience" centered toggle={() => setOpenCourses(false)}>
+                                                <ModalHeader>
+                                                    Upload Courses
+                                                </ModalHeader>
+                                                <ModalBody className="modal-body-exp" style={{height:'500px !important'}}>
+                                                    <div className="input-card" tabIndex={0}>
+                                                        <GiStrong className="icon-user"/>
+                                                        <input type="text" className="input-box-register" placeholder='Courses Title' onChange={(e)=>setAddCourses(e.target.value)}  />
+                                                    </div>
+                                                    <div className="input-card" tabIndex={0}>
+                                                        <GiStrong className="icon-user"/>
+                                                        <input type="text" className="input-box-register" placeholder='Your Youtube ID' onChange={(e)=>setAddYoutube(e.target.value)}  />
+                                                    </div>
+                                                    <div className="input-card" tabIndex={0}>
+                                                        <GiStrong className="icon-user"/>
+                                                        <input type="text" className="input-box-register" placeholder='Courses Type' onChange={(e)=>setAddType(e.target.value)}  />
+                                                    </div>
+                                                    <div className="input-card" tabIndex={0}>
+                                                        <GiStrong className="icon-user"/>
+                                                        <input type="text" className="input-box-register" placeholder='Description' onChange={(e)=>setAddDescription(e.target.value)}  />
+                                                    </div>
+                                                    <div className="input-card-file" tabIndex={0}>
+                                                        {/* <GiStrong className="icon-user"/> */}
+                                                        <input type="file" className="input-box-register-file" placeholder='Description' onChange={(e)=>setAddImage(e.target.value)}  />
+                                                    </div>
+                                                    <div className="btn-simpan-exp" onClick={finalSaveCourses}>
+                                                        Save
+                                                    </div>
+                                                </ModalBody>
+                                            </Modal>
+                                            <div className="box-for-btn">
+                                                <div className="btn-tambah-skill" onClick={()=>setOpenCourses(true)}>
+                                                    Add Courses
+                                                </div>
+                                            </div>
+                                            <div className="box-render-card-courses">
+                                                <div className="box-detail-courses">
+                                                    <ul>
+                                                        <li>ID</li>
+                                                        <li>COURSES</li>
+                                                        <li>YOUTUBE ID</li> 
+                                                        <li>TYPE</li>
+                                                    </ul>
+                                                </div>
+                                                <div className="box-render-courses">
+                                                    {renderCoursesCoach()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                </Tab>
+                            </Tabs>
                             </>
                             :
                             <>
-                                <Tab eventKey="contact" title="Class" className="tab-item">
+                            <Tabs
+                                id="controlled-tab-example"
+                                activeKey={key}
+                                onSelect={(k) => setKey(k)}
+                                className="mb-3 tabs-coach"
+                                >
+                                <Tab eventKey="home" title="Biodata Diri" className="tab-item">
+                                    <div className="new-box-item-tab">
+                                        <div className="item-left-profile">
+                                            <div className="shadowbox-img">
+                                                <img src={dataCustStorage.imageUrl} alt="" />
+                                                <div className="btn-changeimg">
+                                                    Pilih Foto
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-right-profile">
+                                            <p className="title-bio">Ubah Biodata Diri</p>
+                                            <div className="card-name">
+                                                <p>Nama</p>
+                                                {
+                                                    isGantiNama ? 
+                                                    <>
+                                                        <input type="text"  defaultValue={namaProfile} className="input-profile" onChange={(e)=>onHandleName(e.target.value)} />
+                                                        <p onClick={simpanNama}>Simpan</p>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <p>{dataCustStorage.name}</p>
+                                                        <p onClick={ubahNama}>Ubah</p>
+                                                    </>
+                                                }
+                                            </div>
+                                            <div className="card-name">
+                                                <p>Email</p>
+                                                    
+                                                    <>
+                                                        <p>{dataCustStorage.email}</p>
+                                                        {/* <p onClick={ubahEmail}>Ubah</p> */}
+                                                    </>
+                                                
+                                            </div>
+                                            <div className="card-name">
+                                                <p>Status</p>
+                                                <p>{dataCustStorage.status}</p>
+                                                {/* <p>Ubah</p> */}
+                                            </div>
+
+                                            <div className="btn-password">
+                                                Ganti Password
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="contact" title="Skill" className="tab-item">
+                                    <div className="box-item-tab">
+                                        <Modal isOpen={openSkill} className="modals-experience" centered toggle={() => setOpenSkill(false)}>
+                                            <ModalHeader>
+                                            Add Skill
+                                            </ModalHeader>
+                                            <ModalBody className="modal-body-exp" style={{height:'500px !important'}}>
+                                                <div className="input-card" tabIndex={0}>
+                                                    <GiStrong className="icon-user"/>
+                                                    <input type="text" className="input-box-register" placeholder='Your Experience' onChange={(e)=>setAddSkill(e.target.value)}  />
+                                                </div>
+                                                <div className="btn-simpan-exp" onClick={finalSaveSkill}>
+                                                    Save
+                                                </div>
+                                            </ModalBody>
+                                        </Modal>
+                                        {/* <div className="box-for-btn">
+                                            {
+                                                status  === 'Coach'?
+                                                <div className="btn-tambah-skill" onClick={()=>setOpenSkill(true)}>
+                                                    Add Skill
+                                                </div>
+                                            :
+                                                <>
+                                                </>
+                                            }
+                                        </div> */}
+                                        <div className="box-render-card">
+                                            {renderSkill()}
+                                        </div>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="Classes" title="Class" className="tab-item">
                                     <div className="box-item-tab">
                                         {renderClassesAthlete()}
                                     </div>
                                 </Tab>
-                                <Tab eventKey="contact" title="Youtube" className="tab-item">
-                                    <div className="box-item-tab">
-                                        {renderVideo()}
-                                    </div>
-                                </Tab>
+                            </Tabs>
                             </>
-                            }
-                        </Tabs>
+                        }
+
                     </div>
                 </div>
             </div>
