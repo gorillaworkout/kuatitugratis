@@ -597,18 +597,7 @@ export default function Profile(){
                                                     Save
                                                 </div>
                                             </ModalBody>
-                                        </Modal>
-                                        {/* <div className="box-for-btn">
-                                            {
-                                                status  === 'Coach'?
-                                                <div className="btn-tambah-skill" onClick={()=>setOpenSkill(true)}>
-                                                    Add Skill
-                                                </div>
-                                            :
-                                                <>
-                                                </>
-                                            }
-                                        </div> */}
+                                        </Modal> 
                                         <div className="box-render-card">
                                             {renderSkill()}
                                         </div>
@@ -616,7 +605,18 @@ export default function Profile(){
                                 </Tab>
                                 <Tab eventKey="Classes" title="Class" className="tab-item">
                                     <div className="box-item-tab">
-                                        {renderClassesAthlete()}
+                                        <div className="box-detail-courses">
+                                            <ul>
+                                                <li>ID</li>
+                                                <li>COURSES</li>
+                                                <li>COACH</li> 
+                                                <li>TYPE</li>
+                                            </ul>
+                                        </div>
+                                        <div className="box-item-tab">
+                                            {renderClassesAthlete()}
+                                        </div>
+
                                     </div>
                                 </Tab>
                             </Tabs>
