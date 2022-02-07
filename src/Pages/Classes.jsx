@@ -27,19 +27,12 @@ export default function Classes(){
 
     const getAllCourses=async()=>{
         let dataCust = JSON.parse(localStorage.getItem('loginGF'))
-        console.log(dataCust,' ini dataCust')
         setDataCustStorage(dataCust)
         const Courses = await CoursesDataService.getAllCourses()
         var testing = []
         Courses.docs.map((doc)=>(
             
             {...doc.data(),id:doc.id}))
-        console.log(testing)
-
-        Courses.docs.map((val,index)=>{
-            console.log(val)
-        })
-        
         const Auth = await AuthDataService.getAllAuth()
         if(Courses && Auth){
             setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
@@ -60,8 +53,6 @@ export default function Classes(){
 
 
     const renderAmazingCourses=()=>{
-        console.log(allCourses)
-
         return allCourses.map((val,index)=>{
             return (
                 <CardPersegi arr={{

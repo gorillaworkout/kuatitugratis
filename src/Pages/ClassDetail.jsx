@@ -39,8 +39,6 @@ export default function ClassDetail(){
         if(dataCust){ // berarti udah login
             const Auth = await AuthDataService.getAuth(dataCust.id)
             setDataCustStorage(Auth.data())
-
-            console.log(dataCust,' ini dataCust')
             const Courses = await CoursesDataService.getAllCourses()
             if(Courses){
                 setAllCourses(Courses.docs.map((doc)=>({...doc.data(),id:doc.id})))
@@ -63,7 +61,6 @@ export default function ClassDetail(){
     const tambahSkill=async()=>{
         let idProfile = JSON.parse(localStorage.getItem('loginGF'))
         let idCourses= code
-        console.log(idProfile,idCourses)
         let coursesArr = dataCustStorage.classes
         let skillArr = dataCustStorage.skill
 
@@ -123,11 +120,10 @@ export default function ClassDetail(){
     const renderTitle=()=>{
         let isAdd = false
         let findIndex = allCourses.findIndex((val,index)=>{
-            return code === val.coursesID
+            console.log(val,val.coursesID)
+            return code == val.coursesID
         })
-        console.log(allCourses)
-        console.log(allCourses[findIndex].youtube)
-        console.log(dataCustStorage)
+        console.log(allCourses[findIndex])
 
         return (
             <>

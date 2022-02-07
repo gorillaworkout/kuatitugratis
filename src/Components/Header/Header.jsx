@@ -38,27 +38,18 @@ export default function Header(){
         const position = window.pageYOffset;
         if(position > 0 ){
             if(toggleMenu){
-                console.log('masuk ke else if ',toggleMenu)
                 setIsHeaderScroll(true)
-                // setToggleMenu(true)
             }else {
-                console.log('header scroll jadi false  dari handle scroll')
                 setIsHeaderScroll(true)
             }
         }else if (position === 0){
-            console.log(toggleMenu,'ini toggle menu')
             if(toggleMenu){
-                console.log('masuk ke else if ',toggleMenu)
                 setIsHeaderScroll(true)
-                // setToggleMenu(true)
             }else {
-                console.log('header scroll jadi false  dari handle scroll')
                 setIsHeaderScroll(false)
                 setToggleMenu(false)
             }
-            
         }
-      
         setScrollPosition(position);
       };
       useEffect(() => {
@@ -74,19 +65,14 @@ export default function Header(){
       
       const onMouseEnter=()=>{
           if(isHeaderScroll){
-            console.log('header scroll is false')
               setIsHeaderScroll(false)
           }else {
-                console.log('header scroll is true')
             setIsHeaderScroll(true)
           }
 
         if(toggleMenu){
-            console.log('toggle menu is false')
             setToggleMenu(false)
         }else {
-            console.log('toggle menu is true')
-            console.log('header scroll is true')
             setToggleMenu(true)
             setIsHeaderScroll(true)
         }
@@ -101,7 +87,6 @@ export default function Header(){
 
     const fetchingUser=async()=>{
         let dataCust = JSON.parse(localStorage.getItem('loginGF'))
-        console.log(dataCust.id)
         if(dataCust){
             // navigate('/')
             if(dataCust.status === 'Athlete'){
@@ -113,7 +98,6 @@ export default function Header(){
             }
             const Auth = await AuthDataService.getAuth(dataCust.id)
             var allAuth = Auth.data()
-            console.log(allAuth)
             setDataCustStorage(Auth.data())
             setIsLoading(false)
             setIsLogin(true)
@@ -126,7 +110,6 @@ export default function Header(){
             
             fetchingUser()
         }else if (dataCustStorage) {
-            console.log('masuk ke sini 128')
             setIsLogin(true)
         }
     },[])

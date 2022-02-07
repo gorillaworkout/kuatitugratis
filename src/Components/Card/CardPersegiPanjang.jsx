@@ -6,7 +6,7 @@ import {FiVideo} from 'react-icons/fi'
 import {BiTime} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
 export default function CardPersegiPanjang({arr}){
-console.log(arr)
+
     return (
         <>
             <Link to={`/detail/${arr.link}`} className="card-item">

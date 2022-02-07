@@ -38,8 +38,6 @@ export default function NewRegLog(){
     useEffect(()=>{
         if(dataCustStorage === undefined){
             let dataCust = JSON.parse(localStorage.getItem('loginGF'))
-            console.log(dataCust)
-
             if(dataCust){
                 toast.error(`Welcome to the Club ${"\n"} ${dataCust.name}`, {
                     position: "top-center",
@@ -53,7 +51,7 @@ export default function NewRegLog(){
                 navigate('/')
                 setDataCustStorage(dataCust)
             }else {
-                console.log('masuk ke else 101')
+
                 setTimeout(()=>{
                     setIsLoading(false)
                 },1000)
@@ -63,18 +61,15 @@ export default function NewRegLog(){
 
     useEffect(()=>{
         if(status === 'register_coach'){
-            console.log('226')
             setIsSignIn(false)
             setStatusSignUp('Coach')
 
 
         }else if (status === 'register_athlete'){
-            console.log('231')
             setIsSignIn(false)
             setStatusSignUp('Athlete')
         }
         else if ( status === 'login'){
-            console.log('237')
             setIsSignIn(true)
         }else {
             navigate('/')
@@ -86,21 +81,17 @@ export default function NewRegLog(){
         return re.test(String(email).toLowerCase());
         }
     const onInputEmail=(value,status)=>{
-        console.log(status)
         var checking_email = validateEmail(value)
 
         if(checking_email){
             if(status === 'register'){
-                console.log(value,status)
                 setEmailCustomer(value)
                 
             }else if ( status === 'login'){
                 console.log(value,status)
-                setEmailCustomer(value)
                 
             }
         }else {
-            console.log('format email salah')
         }
 
     }
@@ -227,16 +218,13 @@ export default function NewRegLog(){
         signInWithPopup(auth,provider)
         .then(async(res)=>{
             let googleData = res.user.reloadUserInfo
-            console.log(res)
-            console.log(res.user.reloadUserInfo.localId)
+            // console.log(res.user.reloadUserInfo.localId)
             const data  = await AuthDataService.getAllAuth();
             let arrFireStore = data.docs.map((doc)=>({...doc.data(),id:doc.id})) // data dari firestore
-            console.log(arrFireStore)
             let countingID = arrFireStore.length+1
             let filterUser = arrFireStore.findIndex((val)=>{
                 return val.googleId === res.user.reloadUserInfo.localId
             })
-            console.log(filterUser)
             if(filterUser !== -1){ // kalo bukan -1 berarti user udh ada tinggal login
                 let stringify = JSON.stringify({id:arrFireStore[filterUser].id})
                 localStorage.setItem('loginGF',stringify)
@@ -265,12 +253,10 @@ export default function NewRegLog(){
                 Auth.docs.map((doc)=>{
                     allAuthFromFireStore.push({...doc.data(),id:doc.id})
                 })
-                console.log(allAuthFromFireStore)
     
                 let findIndexNew = allAuthFromFireStore.findIndex((val)=>{
                     return val.email === googleData.email
                 })
-                console.log(findIndexNew)
 
                 if(findIndexNew !== -1 ){
                     let stringify = JSON.stringify({id:allAuthFromFireStore[findIndexNew].id})
