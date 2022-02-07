@@ -4,7 +4,7 @@ import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import { initializeApp } from "firebase/app";
 import {getFirestore} from 'firebase/firestore'
-
+import {getAuth,GoogleAuthProvider,signInWithPopup} from 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCKOgAj49C5wHqBBY7z6SNJA-UGw3D4v4s",
@@ -19,7 +19,18 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app)
 
+const provider = new GoogleAuthProvider()
+
+export const signInWithGoogle =()=>{
+  signInWithPopup(auth,provider)
+  .then((res)=>{
+    console.log(res)
+  }).catch((err)=>{
+    console.log(err)
+  })
+}
 export const db = getFirestore(app)
   
 

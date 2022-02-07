@@ -7,8 +7,10 @@ import RegLog from './Pages/RegLog';
 import Classes from './Pages/Classes';
 import ClassDetail from './Pages/ClassDetail';
 import Profile from './Pages/Profile';
+import NewRegLog from './Pages/newRegLog';
 import AuthDataService from './Services/auth.services'
 import CoursesDataService from './Services/courses.services'
+
 // import { ListGroupItem } from 'reactstrap';
 // import { doc } from 'firebase/firestore';
 // import { QuerySnapshot } from '@firebase/firestore';
@@ -54,6 +56,7 @@ function App() {
     <Routes>
       <Route exact path ='/' element={<Home/>}/>
       <Route exact path ='/account/:status' element={<RegLog/>}/>
+      <Route exact path ='/newaccount/:status' element={<NewRegLog/>}/>
       <Route exact path ='/classes' element={<Classes/>}/>
       <Route exact path ='/detail/:code' element={<ClassDetail/>}/>
       <Route exact path ='/profile' element={<Profile/>}/>
