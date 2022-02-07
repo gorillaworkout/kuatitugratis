@@ -286,6 +286,11 @@ export default function Header(){
                                                                         JOIN ONLINE AS ASTHLETE
                                                                     </Link>
                                                                 </li>
+                                                                <li>
+                                                                    <Link to={'newaccount/register_athlete'} style={{textDecoration:'none'}}>
+                                                                        Login Testing by Google firebase
+                                                                    </Link>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                         <div className="hover-left-card">
@@ -298,6 +303,7 @@ export default function Header(){
                                                                         Update Profile
                                                                     </Link>
                                                                 </li>
+                                                                
                                                               
                                                             </ul>
                                                         </div>

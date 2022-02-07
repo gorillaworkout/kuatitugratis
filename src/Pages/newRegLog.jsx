@@ -127,33 +127,7 @@ export default function NewRegLog(){
                             </div>
                             <div className="box-login-google">
                                 <button onClick={signInWithGoogle}>Sign in With Google</button>
-                                {/* {
-                                    showloginButton ? 
-                                    <GoogleLogin
-                                        clientId={OathClientId}
-                                        buttonText="Sign in with Google"
-                                        onSuccess={onLoginSuccess}
-                                        onFailure={onLoginFailure}
-                                        cookiePolicy={'single_host_origin'}
-                                        className="btn-google-real"
-                                    /> : null
-
-                                }
-                                {showlogoutButton ? 
-                                    <GoogleLogout
-                                    clientId={OathClientId}
-                                    buttonText="Sign Out"
-                                    onLogoutSuccess={onSignoutSuccess}
-                                    className="btn-google-real"
-                                    >
-                                    </GoogleLogout>
-                                    : 
-                                    null
-                                } */}
-
                             </div>
-
-                
                             <div className="box-to-login">
                                 <Link to={'/account/register_athlete'} style={{textDecoration:'none'}}>
                                     <p>Register as Athlete</p>
@@ -185,24 +159,6 @@ export default function NewRegLog(){
                          </div>
                          <div className="box-login-google">
                              <button onClick={signInWithGoogle}>Sign in With Google</button>
-                             {/* {
-                                 showloginButton ? 
-                                 : 
-                                 null
-
-                             } */}
-                             {/* {showlogoutButton ? 
-                                 <GoogleLogout
-                                 clientId={OathClientId}
-                                 buttonText="Sign Out"
-                                 onLogoutSuccess={onSignoutSuccess}
-                                 className="btn-google-real"
-                                 >
-                                 </GoogleLogout>
-                                 : 
-                                 null
-                             } */}
-
                          </div>
 
              
@@ -235,34 +191,8 @@ export default function NewRegLog(){
                             <p>REGISTER</p>
                         </div>
                         <div className="box-login-google">
-                        <button onClick={signInWithGoogle}>Sign in With Google</button>
-                            {/* {
-                                showloginButton ? 
-                                <GoogleLogin
-                                    clientId={OathClientId}
-                                    buttonText="Register with Google"
-                                    onSuccess={onRegisterAthlete}
-                                    onFailure={onLoginFailure}
-                                    cookiePolicy={'single_host_origin'}
-                                    className="btn-google-real"
-                                /> : null
-
-                            }
-                            {showlogoutButton ? 
-                                <GoogleLogout
-                                clientId={OathClientId}
-                                buttonText="Sign Out"
-                                onLogoutSuccess={onSignoutSuccess}
-                                className="btn-google-real"
-                                >
-                                </GoogleLogout>
-                                : 
-                                null
-                            } */}
-
+                            <button onClick={signInWithGoogle}>Sign in With Google</button>
                         </div>
-
-            
                         <div className="box-to-login">
                             <Link to={'/account/register_coach'} style={{textDecoration:'none'}} onClick={()=>setStatusSignUp('Coach')}>
                                 <p>Sign up as Coach</p>
@@ -274,11 +204,8 @@ export default function NewRegLog(){
                         </div>
                     </div>    
                     
-                    } 
-
-                    
-                    </>
-                        
+                    }
+                    </>        
                 }
             </div>
         </>
