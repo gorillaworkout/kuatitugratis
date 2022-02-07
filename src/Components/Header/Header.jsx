@@ -288,7 +288,7 @@ export default function Header(){
                                                                 </li>
                                                                 <li>
                                                                     <Link to={'newaccount/register_athlete'} style={{textDecoration:'none'}}>
-                                                                        Login Testing by Google firebase
+                                                                        Login  by Google firebase
                                                                     </Link>
                                                                 </li>
                                                             </ul>

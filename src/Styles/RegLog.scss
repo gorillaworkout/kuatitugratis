@@ -52,6 +52,16 @@ $white:rgba(255,255,255,.9);
             border-bottom:1px solid #dedede;
             position: relative;
             top:10px;
+            .btn-google{
+                width:80%;
+                height:40px;
+                border-radius:5px;
+                border:none;
+                .icon-google{
+                    font-size:25px;
+                    margin-right:10px;
+                }
+            }
             .btn-google-real{
                 width:80% !important;
                 // position: relative;
