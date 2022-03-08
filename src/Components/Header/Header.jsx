@@ -270,7 +270,7 @@ export default function Header(){
                                                                     </Link>
                                                                 </li>
                                                                 <li>
-                                                                    <Link to={'newaccount/register_athlete'} style={{textDecoration:'none'}}>
+                                                                    <Link to={'/newaccount/register_athlete'} style={{textDecoration:'none'}}>
                                                                         Login  by Google firebase
                                                                     </Link>
                                                                 </li>

@@ -45,6 +45,7 @@ export default function ClassDetail(){
                 setIsLoading(false)
             }else {
                 // no courses from firestore
+                alert('blm login')
             }
         }else {
             // blm login gpp. 
@@ -54,7 +55,7 @@ export default function ClassDetail(){
         if(allCourses === undefined){
             getAllCourses()
         }else {
-
+            alert('blm login')
         }
     },[])
 

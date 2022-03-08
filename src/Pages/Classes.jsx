@@ -40,13 +40,14 @@ export default function Classes(){
             setIsLoading(false)
         }else {
             console.log('masuk ke else 39')
+            
         }
     }
     useEffect(()=>{
         if(allCourses === undefined){
             getAllCourses()
         }else {
-
+            
         }
     },[])
 
